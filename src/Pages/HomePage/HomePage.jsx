@@ -3,15 +3,15 @@ import sendRequest from "../../utilities/send-request";
 import Loading from "../../Components/Loading";
 
 export default function HomePage() {
-  const [music, setMusic] = useState(null);
+  const [products, setProducts] = useState(null);
   const [status, setStatus] = useState("idle");
 
   useEffect(() => {
     async function getBands() {
-      const music = await sendRequest("/products", "GET");
+      const products = await sendRequest("/products", "GET");
       setStatus("loading");
-      setMusic(music);
-      console.log("sent!");
+      setProducts(products);
+      console.log("Product send request success!");
       setStatus("success");
     }
     getBands();
@@ -19,11 +19,16 @@ export default function HomePage() {
 
   if (status === "loading") {
     return <Loading />;
-  }
-  return (
-    <>
-      <h1>Main Page</h1>
-      Products: {JSON.stringify(music)}
-    </>
-  );
+  } else
+    return (
+      <>
+        <h1>Main Page</h1>
+        Products: {JSON.stringify(products)}
+        {products?.map((product) => (
+          <div key={product.id}>
+            <img src={product.image_link} alt="product_image" />
+          </div>
+        ))}
+      </>
+    );
 }
