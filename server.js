@@ -13,7 +13,9 @@ app.use(express.json());
 
 const port = process.env.PORT || 3001;
 
-app.use("/api", require("./routes/api/music"));
+// app.use("/api", require("./routes/api/music"));
+app.use("/api", require("./routes/api/users"));
+app.use("/products", require("./routes/api/products"));
 
 app.get("/hi", (req, res) => res.json({ msg: "hi" }));
 
