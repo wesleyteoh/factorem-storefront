@@ -14,4 +14,3 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 8. Admin can change item active or not
 9. Admin can change item stock
 10. Admin can change item alternative pricing
-11. Admin can create seller account in admin page
