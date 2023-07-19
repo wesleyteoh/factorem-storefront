@@ -54,7 +54,7 @@ export default function Navbar({ user, setUser }) {
         <div className="navbar-container">
           {isDropdownOpen && user && (
             <div className="dropdown-box">
-              <h6 style={{ textAlign: "center" }}>Hello, {user.name}</h6>
+              <h6 style={{ textAlign: "center" }}>Hello, {user.user_name}</h6>
               {pathname !== "/mainpage" && (
                 <Link
                   className="user-nav-home"
@@ -74,7 +74,7 @@ export default function Navbar({ user, setUser }) {
                     <div>My Profile</div>
                   </Link>
                 )}
-              {pathname !== `/users/${user._id}/friends` && (
+              {/* {pathname !== `/users/${user._id}/friends` && (
                 <Link
                   className="user-nav-myfriends"
                   style={{ textDecoration: "none", color: "inherit" }}
@@ -82,7 +82,7 @@ export default function Navbar({ user, setUser }) {
                 >
                   <div>My Following</div>
                 </Link>
-              )}
+              )} */}
               {pathname !== `/users/${user._id}` &&
                 pathname !== `/users/${user._id}/settings` && (
                   <Link

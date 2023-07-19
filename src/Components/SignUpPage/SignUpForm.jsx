@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signUp } from "../../utilities/users-api";
+import * as usersService from "../../utilities/users-service";
 
-export default function SignUpForm() {
+export default function SignUpForm({ setUser }) {
+  const navigate = useNavigate();
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -27,14 +30,33 @@ export default function SignUpForm() {
     }
   }, [newUser.password, newUser.confirm]);
   const disable = newUser.password !== newUser.confirm;
-  //   const handleSubmit = {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = { ...newUser };
+      delete formData.errorMessage;
+      delete formData.confirm;
+      const user = await usersService.signUp(formData);
+      //   const user = await signUp(formData);
+      console.log("user", user);
+      setUser(user);
+
+      if (user) {
+        console.log("success signup");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+      setNewUser({ ...newUser, errorMessage: "Sign Up Failed. Try Again." });
+    }
+  };
   //Navigate to next page which is to enter user address else skip
 
   return (
     <div>
       <div className="signUpForm">
-        {/* <form autoComplete="off" onSubmit={handleSubmit}> */}
-        <form autoComplete="off">
+        <form autoComplete="off" onSubmit={handleSubmit}>
+          {/* <form autoComplete="off"> */}
           <label>Name</label>
           <input
             type="text"

@@ -10,7 +10,7 @@ export default function App() {
   const [user, setUser] = useState("");
   return (
     <main className="App">
-      {user === "buyer" ? (
+      {/* {user === "buyer" ? (
         <>
           <Navbar />
           <Routes>
@@ -24,16 +24,16 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
           </Routes>
         </>
-      ) : (
-        <>
-          <Navbar user={user} setUser={setUser} />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/register" element={<SignUpPage />} />
-            <Route path="/login" element={<LogInPage setUser={setUser} />} />
-          </Routes>
-        </>
-      )}
+      ) : ( */}
+      <>
+        <Navbar user={user} setUser={setUser} />
+        <Routes>
+          <Route path="/" element={<HomePage user={user} />} />
+          <Route path="/register" element={<SignUpPage setUser={setUser} />} />
+          <Route path="/login" element={<LogInPage setUser={setUser} />} />
+        </Routes>
+      </>
+      {/* )} */}
     </main>
   );
 }

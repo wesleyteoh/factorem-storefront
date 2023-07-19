@@ -35,7 +35,12 @@ const create = async (req, res) => {
       [name, email, bcryptPassword]
     );
     // Generate JWT token
-    const token = createJWT(newUser.rows[0].user_id);
+    const returnUser = await pool.query(
+      "SELECT user_id,user_name,user_image FROM accounts WHERE user_email = $1",
+      [email]
+    );
+    const token = createJWT(returnUser.rows[0]);
+    // const token = createJWT(newUser.rows[0].user_id);
     res.json(token);
   } catch (err) {
     res.status(400).json(err);
