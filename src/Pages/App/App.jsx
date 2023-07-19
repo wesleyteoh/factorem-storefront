@@ -1,13 +1,19 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import HomePage from "../HomePage/HomePage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar";
 import SignUpPage from "../SignUpPage/SignUpPage";
 import LogInPage from "../LogInPage/LoginPage";
+import { getUser } from "../../utilities/users-service";
 
 export default function App() {
   const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const loggedInUser = getUser();
+    setUser(loggedInUser);
+  }, []);
   return (
     <main className="App">
       {/* {user === "buyer" ? (

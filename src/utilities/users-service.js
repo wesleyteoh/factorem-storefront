@@ -35,3 +35,6 @@ export async function login(userData) {
   localStorage.setItem("token", token);
   return getUser();
 }
+export function logOut() {
+  localStorage.removeItem("token");
+}

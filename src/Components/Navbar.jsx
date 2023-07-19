@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import * as userService from "../utilities/users-service";
 
 export default function Navbar({ user, setUser }) {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleLogOut = () => {
-    // userService.logOut();
-    // setUser(null);
+    userService.logOut();
+    setUser(null);
   };
   const handleSignIn = () => {
     navigate("/login");
