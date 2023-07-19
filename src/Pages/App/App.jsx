@@ -26,7 +26,7 @@ export default function App() {
         </>
       ) : (
         <>
-          <Navbar />
+          <Navbar user={user} setUser={setUser} />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<SignUpPage />} />

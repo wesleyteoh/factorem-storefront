@@ -1,4 +1,20 @@
-export default function Navbar() {
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+export default function Navbar({ user, setUser }) {
+  const navigate = useNavigate();
+  const pathname = useLocation().pathname;
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const handleLogOut = () => {
+    // userService.logOut();
+    // setUser(null);
+  };
+  const handleSignIn = () => {
+    navigate("/login");
+  };
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
   return (
     <>
       <img
@@ -6,7 +22,88 @@ export default function Navbar() {
         alt="factorem-logo"
         className="factorem-logo"
       />
-      Navbar
+      {/* Navbar */}
+      <div className="user-dropdown">
+        <button className="user-nav-button" onClick={toggleDropdown}>
+          {user && (
+            // <img
+            //   src={profilePic}
+            //   alt="User Profile"
+            //   className="profile-picture"
+            // />
+            <></>
+          )}
+          {!user ? (
+            <>
+              <span className="sign-in-text" onClick={handleSignIn}>
+                Sign In
+              </span>
+            </>
+          ) : (
+            // <MenuIcon
+            //   sx={{ color: "white" }}
+            //   style={{
+            //     width: "20px",
+            //     height: "20px",
+            //     marginRight: "5px",
+            //   }}
+            // />
+            <></>
+          )}
+        </button>
+        <div className="navbar-container">
+          {isDropdownOpen && user && (
+            <div className="dropdown-box">
+              <h6 style={{ textAlign: "center" }}>Hello, {user.name}</h6>
+              {pathname !== "/mainpage" && (
+                <Link
+                  className="user-nav-home"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to="/mainpage"
+                >
+                  <div>Home</div>
+                </Link>
+              )}
+              {pathname !== `/users/${user._id}` &&
+                pathname !== `/users/${user._id}/settings` && (
+                  <Link
+                    className="user-nav-myprofile"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    to={`/users/${user._id}`}
+                  >
+                    <div>My Profile</div>
+                  </Link>
+                )}
+              {pathname !== `/users/${user._id}/friends` && (
+                <Link
+                  className="user-nav-myfriends"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to={`/users/${user._id}/friends`}
+                >
+                  <div>My Following</div>
+                </Link>
+              )}
+              {pathname !== `/users/${user._id}` &&
+                pathname !== `/users/${user._id}/settings` && (
+                  <Link
+                    className="user-nav-settings"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    to={`/users/${user._id}/settings`}
+                  >
+                    <div>Settings</div>
+                  </Link>
+                )}
+              <Link
+                className="user-nav-logout"
+                style={{ textDecoration: "none", color: "inherit" }}
+                to="/"
+              >
+                <div onClick={handleLogOut}>Log Out</div>
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
     </>
   );
 }
