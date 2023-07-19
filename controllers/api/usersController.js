@@ -15,7 +15,9 @@ async function getUsers(req, res) {
 }
 const create = async (req, res) => {
   try {
+    // Destructure req,body
     const { name, email, password } = req.body;
+    // Check if user exists
     const user = await pool.query(
       "SELECT * FROM accounts WHERE user_email = $1",
       [email]
@@ -24,15 +26,17 @@ const create = async (req, res) => {
     if (user.rows.length !== 0) {
       return res.status(401).json("User already exists");
     }
+    // Bcrypt userpassword
     const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
     const bcryptPassword = await bcrypt.hash(password, salt);
-
+    // Entering new user into db
     const newUser = await pool.query(
       "INSERT INTO accounts(user_name,user_email,user_password) VALUES ($1,$2,$3) RETURNING *",
       [name, email, bcryptPassword]
     );
+    // Generate JWT token
     const token = createJWT(newUser.rows[0].user_id);
-    res.json({ token });
+    res.json(token);
   } catch (err) {
     res.status(400).json(err);
     console.log(err);
@@ -58,12 +62,22 @@ const login = async (req, res) => {
     if (!match) {
       throw new Error();
     }
-    const token = createJWT(user.rows[0].user_password);
-    res.json({ token });
+    console.log("loginUser", user.rows[0]);
+    const returnUser = await pool.query(
+      "SELECT user_id,user_name,user_image FROM accounts WHERE user_email = $1",
+      [email]
+    );
+    const token = createJWT(returnUser.rows[0]);
+    res.json(token);
   } catch (err) {
     res.status(400).json("Incorrect email or password");
     console.log(err);
   }
 };
 
-module.exports = { getUsers, create, login };
+function checkToken(req, res) {
+  console.log("req.user", req.user);
+  res.json(req.exp);
+}
+
+module.exports = { getUsers, create, login, checkToken };

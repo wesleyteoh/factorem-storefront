@@ -4,6 +4,7 @@ import HomePage from "../HomePage/HomePage";
 import { useState } from "react";
 import Navbar from "../../Components/Navbar";
 import SignUpPage from "../SignUpPage/SignUpPage";
+import LogInPage from "../LogInPage/LoginPage";
 
 export default function App() {
   const [user, setUser] = useState("");
@@ -29,6 +30,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<SignUpPage />} />
+            <Route path="/login" element={<LogInPage setUser={setUser} />} />
           </Routes>
         </>
       )}

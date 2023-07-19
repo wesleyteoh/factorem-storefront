@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm() {
   const [newUser, setNewUser] = useState({
@@ -18,6 +19,13 @@ export default function SignUpForm() {
     });
     console.log(newUser);
   };
+  useEffect(() => {
+    if (newUser.password !== newUser.confirm) {
+      setPwErrorMessage("Password and Confirm Password do not match.");
+    } else {
+      setPwErrorMessage("");
+    }
+  }, [newUser.password, newUser.confirm]);
   const disable = newUser.password !== newUser.confirm;
   //   const handleSubmit = {};
   //Navigate to next page which is to enter user address else skip

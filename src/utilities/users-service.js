@@ -21,5 +21,16 @@ export function getToken() {
 
 export function getUser() {
   const token = getToken();
-  return token ? JSON.parse(atob(token.split(".")[1])).user : null;
+  console.log("token", token);
+  console.log("atob", JSON.parse(atob(token.split(".")[1])));
+  return token ? JSON.parse(atob(token.split(".")[1])).user_id : null;
+}
+
+export function checkToken() {
+  return usersAPI.checkToken().then((dateStr) => new Date(dateStr));
+}
+export async function login(userData) {
+  const token = await usersAPI.login(userData);
+  localStorage.setItem("token", token);
+  return getUser();
 }
