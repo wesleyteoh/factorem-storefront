@@ -11,6 +11,7 @@ export default function SignUpForm({ setUser }) {
     password: "",
     confirm: "",
     errorMessage: "",
+    contact: "",
   });
 
   const [pwErrorMessage, setPwErrorMessage] = useState("");
@@ -74,6 +75,16 @@ export default function SignUpForm({ setUser }) {
             className="input"
             placeholder="Email"
             value={newUser.email}
+            onChange={handleChange}
+            required
+          />
+          <label>Contact number</label>
+          <input
+            type="number"
+            name="contact"
+            className="input"
+            placeholder="Contact number"
+            value={newUser.contact}
             onChange={handleChange}
             required
           />

@@ -16,7 +16,7 @@ async function getUsers(req, res) {
 const create = async (req, res) => {
   try {
     // Destructure req,body
-    const { name, email, password } = req.body;
+    const { name, email, password, contact } = req.body;
     // Check if user exists
     const user = await pool.query(
       "SELECT * FROM accounts WHERE user_email = $1",
@@ -31,12 +31,16 @@ const create = async (req, res) => {
     const bcryptPassword = await bcrypt.hash(password, salt);
     // Entering new user into db
     const newUser = await pool.query(
-      "INSERT INTO accounts(user_name,user_email,user_password) VALUES ($1,$2,$3) RETURNING *",
+      "INSERT INTO accounts(user_name,user_email,user_password,user_date_created) VALUES ($1,$2,$3,now()) RETURNING *",
       [name, email, bcryptPassword]
+    );
+    await pool.query(
+      "INSERT INTO account_details(account,user_contact) VALUES ((SELECT user_id FROM accounts WHERE user_email = $1),$2)",
+      [email, contact]
     );
     // Generate JWT token
     const returnUser = await pool.query(
-      "SELECT user_id,user_name,user_image FROM accounts WHERE user_email = $1",
+      "SELECT user_id,user_name,user_image,user_type FROM accounts WHERE user_email = $1",
       [email]
     );
     const token = createJWT(returnUser.rows[0]);
@@ -69,7 +73,7 @@ const login = async (req, res) => {
     }
     console.log("loginUser", user.rows[0]);
     const returnUser = await pool.query(
-      "SELECT user_id,user_name,user_image FROM accounts WHERE user_email = $1",
+      "SELECT user_id,user_name,user_image,user_type FROM accounts WHERE user_email = $1",
       [email]
     );
     const token = createJWT(returnUser.rows[0]);
@@ -85,4 +89,30 @@ function checkToken(req, res) {
   res.json(req.exp);
 }
 
-module.exports = { getUsers, create, login, checkToken };
+const getAccountDetails = async (req, res) => {
+  try {
+    const { email, user_id } = req.body;
+    if (email == null) {
+      throw new Error();
+    }
+    const details = await pool.query(
+      "SELECT * FROM account_details WHERE account =$1",
+      [user_id]
+    );
+    const verifyOriginEmail = await pool.query(
+      "SELECT user_email FROM accounts WHERE user_email=$1",
+      [email]
+    );
+    // To verify incoming email and id matches with db
+    if (verifyOriginEmail.rows[0].user_email === email) {
+      res.json(details.rows[0]);
+    } else {
+      res.status(401).json("unverified");
+    }
+  } catch (err) {
+    res.status(401).json("Bad response");
+    console.log(err);
+  }
+};
+
+module.exports = { getUsers, create, login, checkToken, getAccountDetails };

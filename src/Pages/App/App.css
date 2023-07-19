@@ -79,3 +79,57 @@
     transform: rotate(360deg);
   }
 }
+
+.user-nav-button {
+  background-color: rgb(68, 0, 0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  border-radius: 7px;
+  border: none;
+}
+
+.profile-picture {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 5px;
+  display: flex;
+}
+
+.user-nav-home,
+.user-nav-myprofile,
+.user-nav-myfriends,
+.user-nav-settings,
+.user-nav-logout {
+  display: block;
+  text-align: left;
+  background-color: darkred;
+  z-index: 99;
+  font-size: small;
+  margin: 20px;
+}
+.user-nav-login {
+  display: block;
+  text-align: left;
+  background-color: darkred;
+  z-index: 99;
+  font-size: small;
+  margin: 20px;
+}
+
+.navbar-container {
+  position: absolute;
+  z-index: 99;
+  background-color: darkred;
+  top: 42px;
+  width: 140px;
+  right: 6px;
+}
+
+.user-dropdown {
+  position: relative;
+  margin-left: auto;
+}

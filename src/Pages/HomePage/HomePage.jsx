@@ -26,7 +26,7 @@ export default function HomePage({ user }) {
         User:{JSON.stringify(user)}
         Products: {JSON.stringify(products)}
         {products?.map((product) => (
-          <div key={product.id}>
+          <div key={product.product_id}>
             <img src={product.image_link} alt="product_image" />
           </div>
         ))}

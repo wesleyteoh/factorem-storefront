@@ -27,12 +27,12 @@ export default function Navbar({ user, setUser }) {
       <div className="user-dropdown">
         <button className="user-nav-button" onClick={toggleDropdown}>
           {user && (
-            // <img
-            //   src={profilePic}
-            //   alt="User Profile"
-            //   className="profile-picture"
-            // />
-            <></>
+            <img
+              src={user.user_image}
+              alt="User Profile"
+              className="profile-picture"
+            />
+            // <></>
           )}
           {!user ? (
             <>
@@ -60,7 +60,7 @@ export default function Navbar({ user, setUser }) {
                 <Link
                   className="user-nav-home"
                   style={{ textDecoration: "none", color: "inherit" }}
-                  to="/mainpage"
+                  to="/"
                 >
                   <div>Home</div>
                 </Link>
@@ -70,7 +70,8 @@ export default function Navbar({ user, setUser }) {
                   <Link
                     className="user-nav-myprofile"
                     style={{ textDecoration: "none", color: "inherit" }}
-                    to={`/users/${user._id}`}
+                    to={`/users/profile`}
+                    // to={`/users/${user.user_id}`}
                   >
                     <div>My Profile</div>
                   </Link>
@@ -84,7 +85,7 @@ export default function Navbar({ user, setUser }) {
                   <div>My Following</div>
                 </Link>
               )} */}
-              {pathname !== `/users/${user._id}` &&
+              {/* {pathname !== `/users/${user._id}` &&
                 pathname !== `/users/${user._id}/settings` && (
                   <Link
                     className="user-nav-settings"
@@ -93,7 +94,7 @@ export default function Navbar({ user, setUser }) {
                   >
                     <div>Settings</div>
                   </Link>
-                )}
+                )} */}
               <Link
                 className="user-nav-logout"
                 style={{ textDecoration: "none", color: "inherit" }}
