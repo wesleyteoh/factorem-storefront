@@ -22,7 +22,7 @@ export function getToken() {
 
 export function getUser() {
   const token = getToken();
-  console.log("token", token);
+  //   console.log("token", token);
   //   console.log("atob", JSON.parse(atob(token.split(".")[1])));
   return token ? JSON.parse(atob(token.split(".")[1])).user_id : null;
 }
@@ -46,5 +46,9 @@ export async function getUserDetails(userData) {
 
 export async function updateUserDetails(userData) {
   const updateDetails = await usersAPI.updUserDetail(userData);
+  return updateDetails;
+}
+export async function updateUserPass(userData) {
+  const updateDetails = await usersAPI.updUserPwd(userData);
   return updateDetails;
 }

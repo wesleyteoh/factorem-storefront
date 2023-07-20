@@ -21,3 +21,6 @@ export async function userDetail(userData) {
 export async function updUserDetail(userData) {
   return sendRequest(`${BASE_URL}/profile/update`, "POST", userData);
 }
+export async function updUserPwd(userData) {
+  return sendRequest(`${BASE_URL}/profile/updatePass`, "POST", userData);
+}

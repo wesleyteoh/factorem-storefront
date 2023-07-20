@@ -8,6 +8,7 @@ router.post("/login", userCtrl.login);
 router.get("/check-token", ensureLoggedIn, userCtrl.checkToken);
 router.post("/profile", userCtrl.getAccountDetails);
 router.post("/profile/update", userCtrl.updateAccountDetails);
+router.post("/profile/updatePass", userCtrl.updatePassword);
 // router.get("/", userCtrl.getUsers);
 
 module.exports = router;

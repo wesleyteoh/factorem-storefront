@@ -46,7 +46,7 @@ export default function AccountPage({ user }) {
     try {
       const sendFormData = { ...user1 };
       if (Object.keys(sendFormData).length === 0) {
-        console.log("empty obj");
+        // console.log("empty obj");
       } else {
         delete sendFormData.user_image;
         delete sendFormData.user_name;

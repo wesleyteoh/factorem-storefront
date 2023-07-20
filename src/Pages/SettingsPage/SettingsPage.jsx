@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AccountNavBar from "../../Components/AccountNavBar";
-import { getUser } from "../../utilities/users-service";
+import { getUser, updateUserPass } from "../../utilities/users-service";
 
 export default function SettingsPage() {
   const [user1, setUser1] = useState("");
@@ -29,13 +29,29 @@ export default function SettingsPage() {
     if (!disabled) setError("");
   }, [disabled]);
 
-  const handleSubmitPassword = () => {
+  const handleSubmitPassword = async (event) => {
+    event.preventDefault();
     console.log("passData", passData);
+    const payloadPassword = {
+      user_id: user1.user_id,
+      email: user1.user_email,
+      confirm: passData.confirm,
+      password: passData.password,
+    };
+    console.log(payloadPassword);
+    try {
+      const updatePwd = await updateUserPass(payloadPassword);
+      console.log(updatePwd);
+      setError("Password change success");
+    } catch (err) {
+      console.log(err);
+      setError("Incorrect password. Try again");
+    }
   };
   return (
     <>
       <AccountNavBar />
-      {JSON.stringify(user1)}
+      {/* {JSON.stringify(user1)} */}
       <h1>Change My Password</h1>
       <form onSubmit={handleSubmitPassword}>
         <div className="currpass">

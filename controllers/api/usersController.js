@@ -153,6 +153,33 @@ const updateAccountDetails = async (req, res) => {
   }
 };
 
+const updatePassword = async (req, res) => {
+  try {
+    const { user_id, email, confirm, password } = req.body;
+    const user = await pool.query(
+      "SELECT * FROM accounts WHERE user_email = $1 AND user_id=$2",
+      [email, user_id]
+    );
+    if (user.rows.length === 0) {
+      throw new Error();
+    }
+    const match = await bcrypt.compare(confirm, user.rows[0].user_password);
+    if (!match) {
+      throw new Error();
+    }
+    const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
+    const bcryptPassword = await bcrypt.hash(password, salt);
+    await pool.query(
+      "UPDATE accounts SET user_password=$1 WHERE user_email = $2 AND user_id=$3",
+      [bcryptPassword, email, user_id]
+    );
+    res.json("password updated");
+    // console.log("user", user);
+  } catch (err) {
+    res.status(400).json("Incorrect email or password");
+  }
+};
+
 module.exports = {
   getUsers,
   create,
@@ -160,4 +187,5 @@ module.exports = {
   checkToken,
   getAccountDetails,
   updateAccountDetails,
+  updatePassword,
 };
