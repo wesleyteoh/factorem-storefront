@@ -7,6 +7,7 @@ import SignUpPage from "../SignUpPage/SignUpPage";
 import LogInPage from "../LogInPage/LoginPage";
 import { getUser } from "../../utilities/users-service";
 import AccountPage from "../AccountPage/AccountPage";
+import SettingsPage from "../SettingsPage/SettingsPage";
 
 export default function App() {
   const [user, setUser] = useState("");
@@ -40,6 +41,7 @@ export default function App() {
           <Route path="/login" element={<LogInPage setUser={setUser} />} />
           {/* <Route path="/users/:userId" element={<AccountPage user={user} />} /> */}
           <Route path="/users/profile" element={<AccountPage user={user} />} />
+          <Route path="/users/setting" element={<SettingsPage user={user} />} />
         </Routes>
       </>
       {/* )} */}

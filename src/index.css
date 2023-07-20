@@ -161,3 +161,29 @@ button[type="submit"] {
   grid-column: span 2;
   margin: 1vmin 0 0;
 }
+
+header {
+  justify-content: flex-start;
+  display: flex;
+  /* background-color: rgb(168, 215, 105); */
+}
+
+header ul {
+  display: flex;
+  list-style: none;
+}
+
+header a {
+  color: #eee;
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin: auto 1em;
+}
+
+header a:hover {
+  color: red;
+  padding-bottom: 3px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}

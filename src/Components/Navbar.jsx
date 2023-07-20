@@ -85,16 +85,16 @@ export default function Navbar({ user, setUser }) {
                   <div>My Following</div>
                 </Link>
               )} */}
-              {/* {pathname !== `/users/${user._id}` &&
+              {pathname !== `/users/${user._id}` &&
                 pathname !== `/users/${user._id}/settings` && (
                   <Link
                     className="user-nav-settings"
                     style={{ textDecoration: "none", color: "inherit" }}
-                    to={`/users/${user._id}/settings`}
+                    to={`/users/setting`}
                   >
                     <div>Settings</div>
                   </Link>
-                )} */}
+                )}
               <Link
                 className="user-nav-logout"
                 style={{ textDecoration: "none", color: "inherit" }}

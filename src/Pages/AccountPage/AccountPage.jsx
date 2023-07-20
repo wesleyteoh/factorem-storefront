@@ -6,6 +6,7 @@ import {
   getUserDetails,
   updateUserDetails,
 } from "../../utilities/users-service";
+import AccountNavBar from "../../Components/AccountNavBar";
 
 export default function AccountPage({ user }) {
   const [user1, setUser1] = useState("");
@@ -107,6 +108,7 @@ export default function AccountPage({ user }) {
   };
   return (
     <>
+      <AccountNavBar />
       Account Page
       {/* {JSON.stringify(user1)}
       Line1:{JSON.stringify(profileUserAddressLine1)}
