@@ -40,7 +40,7 @@ const create = async (req, res) => {
     );
     // Generate JWT token
     const returnUser = await pool.query(
-      "SELECT user_id,user_name,user_image,user_type FROM accounts WHERE user_email = $1",
+      "SELECT user_id,user_name,user_image,user_type,user_email FROM accounts WHERE user_email = $1",
       [email]
     );
     const token = createJWT(returnUser.rows[0]);
@@ -73,7 +73,7 @@ const login = async (req, res) => {
     }
     console.log("loginUser", user.rows[0]);
     const returnUser = await pool.query(
-      "SELECT user_id,user_name,user_image,user_type FROM accounts WHERE user_email = $1",
+      "SELECT user_id,user_name,user_image,user_type,user_email FROM accounts WHERE user_email = $1",
       [email]
     );
     const token = createJWT(returnUser.rows[0]);
@@ -91,8 +91,8 @@ function checkToken(req, res) {
 
 const getAccountDetails = async (req, res) => {
   try {
-    const { email, user_id } = req.body;
-    if (email == null) {
+    const { user_email, user_id } = req.body;
+    if (user_email == null) {
       throw new Error();
     }
     const details = await pool.query(
@@ -101,10 +101,10 @@ const getAccountDetails = async (req, res) => {
     );
     const verifyOriginEmail = await pool.query(
       "SELECT user_email FROM accounts WHERE user_email=$1",
-      [email]
+      [user_email]
     );
     // To verify incoming email and id matches with db
-    if (verifyOriginEmail.rows[0].user_email === email) {
+    if (verifyOriginEmail.rows[0].user_email === user_email) {
       res.json(details.rows[0]);
     } else {
       res.status(401).json("unverified");
@@ -115,4 +115,49 @@ const getAccountDetails = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, create, login, checkToken, getAccountDetails };
+const updateAccountDetails = async (req, res) => {
+  try {
+    const {
+      payloadAccount,
+      payloadContact,
+      payloadAddress1,
+      payloadAddress2,
+      payloadCity,
+      payloadCountry,
+      payloadPostal,
+    } = req.body;
+
+    // const updated =
+    await pool.query(
+      `UPDATE account_details 
+      SET user_address_line1 = $2,
+      user_address_line2 = $3,
+      user_city = $4,
+      user_country= $5,
+      user_postal_code = $6,
+      user_contact = $7
+      WHERE account =$1`,
+      [
+        payloadAccount,
+        payloadAddress1,
+        payloadAddress2,
+        payloadCity,
+        payloadCountry,
+        payloadPostal,
+        payloadContact,
+      ]
+    );
+    res.json("updated");
+  } catch (err) {
+    res.json(err);
+  }
+};
+
+module.exports = {
+  getUsers,
+  create,
+  login,
+  checkToken,
+  getAccountDetails,
+  updateAccountDetails,
+};

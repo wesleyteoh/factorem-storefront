@@ -38,3 +38,13 @@ export async function login(userData) {
 export function logOut() {
   localStorage.removeItem("token");
 }
+
+export async function getUserDetails(userData) {
+  const user_details = await usersAPI.userDetail(userData);
+  return user_details;
+}
+
+export async function updateUserDetails(userData) {
+  const updateDetails = await usersAPI.updUserDetail(userData);
+  return updateDetails;
+}
