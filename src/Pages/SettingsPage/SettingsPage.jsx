@@ -81,6 +81,7 @@ export default function SettingsPage() {
               onChange={handleChangePass}
               required
             ></input>
+            <small>password must have a minimum length of 8</small>
           </label>
         </div>
         <button disabled={disabled}>Submit</button>

@@ -81,6 +81,7 @@
 }
 
 .user-nav-button {
+  /* background-color: rgb(68, 0, 0); */
   background-color: rgb(68, 0, 0);
   display: flex;
   justify-content: space-between;
@@ -132,4 +133,7 @@
 .user-dropdown {
   position: relative;
   margin-left: auto;
+  top: 42px;
+  width: 140px;
+  right: 6px;
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import sendRequest from "../../utilities/send-request";
 import Loading from "../../Components/Loading";
+import CartItems from "../../Components/Cart/CartItems";
+import MainProducts from "../../Components/MainProducts/MainProducts";
 
 export default function HomePage({ user }) {
   const [products, setProducts] = useState(null);
@@ -27,7 +29,19 @@ export default function HomePage({ user }) {
         Products: {JSON.stringify(products)}
         {products?.map((product) => (
           <div key={product.product_id}>
-            <img src={product.image_link} alt="product_image" />
+            {/* <CartItems
+              product={product.product_name}
+              price={product.price}
+              quantity={product.stock_avail}
+            /> */}
+            <MainProducts
+              name={product.product_name}
+              price={product.price}
+              altprice={product.alt_price}
+              description={product.description}
+              imageUrl={product.image_link}
+              stock={product.stock_avail}
+            />
           </div>
         ))}
       </>

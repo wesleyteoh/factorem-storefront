@@ -95,6 +95,7 @@ export default function SignUpForm({ setUser }) {
             className="input"
             placeholder="Password"
             value={newUser.password}
+            minLength="8"
             onChange={handleChange}
             required
           />
@@ -105,6 +106,7 @@ export default function SignUpForm({ setUser }) {
             className="input"
             placeholder="Confirm Password"
             value={newUser.confirm}
+            minLength="8"
             onChange={handleChange}
             required
           />

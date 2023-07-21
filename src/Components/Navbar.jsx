@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as userService from "../utilities/users-service";
+// import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Navbar({ user, setUser }) {
   const navigate = useNavigate();
