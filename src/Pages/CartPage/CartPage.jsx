@@ -33,6 +33,24 @@ export default function CartPage() {
 
   const handleAddtoCart = async (event) => {
     event.preventDefault();
+    console.log(cartContent[0].order_id);
+    try {
+      const checkOutRes = await sendRequest(
+        `/api/cart/${user.user_id}/checkout`,
+        "POST",
+        {
+          email: user.user_email,
+          order_id: cartContent[0].order_id,
+        }
+      );
+      console.log(checkOutRes);
+      if (checkOutRes === "checkout success") {
+        console.log("ok");
+        navigate("/users/history");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>

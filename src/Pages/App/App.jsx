@@ -10,6 +10,7 @@ import AccountPage from "../AccountPage/AccountPage";
 import SettingsPage from "../SettingsPage/SettingsPage";
 import CartPage from "../CartPage/CartPage";
 import Unauthorised from "../../Components/Unauthorised";
+import HistoryPage from "../HistoryPage/HistoryPage";
 
 export default function App() {
   const [user, setUser] = useState("");
@@ -41,9 +42,9 @@ export default function App() {
           <Route path="/" element={<HomePage user={user} />} />
           <Route path="/register" element={<SignUpPage setUser={setUser} />} />
           <Route path="/login" element={<LogInPage setUser={setUser} />} />
-          {/* <Route path="/users/:userId" element={<AccountPage user={user} />} /> */}
           <Route path="/users/profile" element={<AccountPage user={user} />} />
           <Route path="/users/setting" element={<SettingsPage user={user} />} />
+          <Route path="/users/history" element={<HistoryPage />} />
           <Route path="/cart" element={<CartPage user={user} />} />
           <Route path="/unauthorised" element={<Unauthorised />} />
         </Routes>

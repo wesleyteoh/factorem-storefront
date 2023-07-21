@@ -55,6 +55,7 @@ async function checkout(req, res) {
       "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
       [email, userId]
     );
+    console.log(email, order_id);
     const match = email === verifyOriginEmail.rows[0].user_email;
     if (match) {
       const order_status = await pool.query(
