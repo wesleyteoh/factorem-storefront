@@ -1,16 +1,17 @@
-export default function CartItems({ product, price, quantity }) {
+export default function CartItems({ product, price, quantity, imgLink }) {
   return (
     <>
       <div className="flex justify-between items-center p-3">
         <div className="flex gap-2">
           <img
             className="h-28 rounded transform hover:scale-105 transition"
-            //   src={`${S3_BUCKET_NAME}/${product.imageUrl}`}
+            src={imgLink}
             alt={product.name}
           />
           <div className="flex flex-col justify-between">
             <p className="font-bold text-lg">{product.name}</p>
-            <p className="text-gray-900 font-semibold">${product * price}</p>
+            <p className="text-gray-900 font-semibold">${price}</p>
+
             <p className="text-gray-500">
               Quantity: <strong>{quantity}</strong>
             </p>
@@ -37,7 +38,7 @@ export default function CartItems({ product, price, quantity }) {
             +
           </button>
         </div>
-        <p className="text-lg font-semibold">${product.price * quantity}</p>
+        <p className="text-lg font-semibold">${price * quantity}</p>
       </div>
       {/* ); */}
       {/* }; */}

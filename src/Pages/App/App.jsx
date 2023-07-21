@@ -8,6 +8,8 @@ import LogInPage from "../LogInPage/LoginPage";
 import { getUser } from "../../utilities/users-service";
 import AccountPage from "../AccountPage/AccountPage";
 import SettingsPage from "../SettingsPage/SettingsPage";
+import CartPage from "../CartPage/CartPage";
+import Unauthorised from "../../Components/Unauthorised";
 
 export default function App() {
   const [user, setUser] = useState("");
@@ -42,6 +44,8 @@ export default function App() {
           {/* <Route path="/users/:userId" element={<AccountPage user={user} />} /> */}
           <Route path="/users/profile" element={<AccountPage user={user} />} />
           <Route path="/users/setting" element={<SettingsPage user={user} />} />
+          <Route path="/cart" element={<CartPage user={user} />} />
+          <Route path="/unauthorised" element={<Unauthorised />} />
         </Routes>
       </>
       {/* )} */}

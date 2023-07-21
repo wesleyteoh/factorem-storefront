@@ -17,6 +17,9 @@ export default function Navbar({ user, setUser }) {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  const handleCart = () => {
+    navigate("cart");
+  };
   return (
     <>
       <Link to="/">
@@ -27,6 +30,11 @@ export default function Navbar({ user, setUser }) {
         />
       </Link>
       {/* Navbar */}
+
+      <button onClick={handleCart}>
+        <div>Cart</div>
+      </button>
+
       <div className="user-dropdown">
         <button className="user-nav-button" onClick={toggleDropdown}>
           {user && (
@@ -55,10 +63,12 @@ export default function Navbar({ user, setUser }) {
             <></>
           )}
         </button>
+
         <div className="navbar-container">
           {isDropdownOpen && user && (
             <div className="dropdown-box">
               <h6 style={{ textAlign: "center" }}>Hello, {user.user_name}</h6>
+
               {pathname !== "/mainpage" && (
                 <Link
                   className="user-nav-home"

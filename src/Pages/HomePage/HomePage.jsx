@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import sendRequest from "../../utilities/send-request";
 import Loading from "../../Components/Loading";
-import CartItems from "../../Components/Cart/CartItems";
 import MainProducts from "../../Components/MainProducts/MainProducts";
 
 export default function HomePage({ user }) {
