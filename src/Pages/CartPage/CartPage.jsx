@@ -9,7 +9,7 @@ export default function CartPage() {
   const [cartContent, setCartContent] = useState(null);
   const [user, setUser] = useState(getUser());
   const navigate = useNavigate();
-  let totalPrice;
+
   useEffect(() => {
     console.log("!user", user);
     if (!user) {
@@ -31,6 +31,9 @@ export default function CartPage() {
     }
   }, []);
 
+  const handleAddtoCart = async (event) => {
+    event.preventDefault();
+  };
   return (
     <>
       Cart Page
@@ -47,7 +50,7 @@ export default function CartPage() {
         </div>
       ))}
       <fieldset>
-        <form>
+        <form onSubmit={handleAddtoCart}>
           <div>Order Summary</div>
           <CartSummary cartContent={cartContent} />
           <button>Order</button>

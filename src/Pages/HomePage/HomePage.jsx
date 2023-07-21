@@ -8,14 +8,13 @@ export default function HomePage({ user }) {
   const [status, setStatus] = useState("idle");
 
   useEffect(() => {
-    async function getBands() {
+    async function getProducts() {
       const products = await sendRequest("/products", "GET");
       setStatus("loading");
       setProducts(products);
-      // console.log("Product send request success!");
       setStatus("success");
     }
-    getBands();
+    getProducts();
   }, []);
 
   if (status === "loading") {

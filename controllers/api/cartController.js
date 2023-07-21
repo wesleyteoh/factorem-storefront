@@ -45,5 +45,42 @@ async function addToCart(req, res) {
     res.status(401).json("Bad request");
   }
 }
+async function checkout(req, res) {
+  const userId = req.params.userId;
+  console.log("userId", userId);
+  try {
+    const { email, order_id } = req.body;
+    // Validate payload email with internal email
+    const verifyOriginEmail = await pool.query(
+      "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
+      [email, userId]
+    );
+    const match = email === verifyOriginEmail.rows[0].user_email;
+    if (match) {
+      const order_status = await pool.query(
+        `SELECT order_paid FROM orders where order_id = $1`,
+        [order_id]
+      );
+      console.log(order_status.rows[0]?.order_paid);
+      if (
+        order_status.rows[0]?.order_paid === undefined ||
+        order_status.rows[0]?.order_paid === true
+      ) {
+        throw new Error();
+      } else {
+        await pool.query(
+          `UPDATE orders
+              SET order_paid = true
+              WHERE order_id=$1`,
+          [order_id]
+        );
+      }
+      res.json("checkout success");
+    } else throw new Error();
+  } catch (err) {
+    console.log(err);
+    res.status(403).json("checkout unsuccess");
+  }
+}
 
-module.exports = { addToCart };
+module.exports = { addToCart, checkout };
