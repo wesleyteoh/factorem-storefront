@@ -1,4 +1,16 @@
-export default function CartSummary({ cartContent }) {
+import { useNavigate } from "react-router";
+
+export default function CartSummary({
+  cartContent,
+  profileUserAddressLine1,
+  profileUserAddressLine2,
+  profileUserCity,
+  profileUserCountry,
+  profileUserPostalCode,
+  profileContact,
+}) {
+  const navigate = useNavigate();
+
   let itemCount = 0;
   let totalPrice = 0;
   for (let i = 0; i < cartContent?.length; i++) {
@@ -6,8 +18,23 @@ export default function CartSummary({ cartContent }) {
     totalPrice =
       totalPrice + cartContent[i].order_quantity * cartContent[i].unit_price;
   }
+
+  const handleToAddress = (event) => {
+    event.preventDefault();
+    navigate("/users/profile");
+  };
   return (
     <>
+      <div>
+        Please confirm the following Address
+        <div>Address 1: {profileUserAddressLine1}</div>
+        <div>Address 2: {profileUserAddressLine2}</div>
+        <div>Postal Code: {profileUserPostalCode}</div>
+        <div>Contact: {profileContact}</div>
+        <div>City: {profileUserCity}</div>
+        <div>Country: {profileUserCountry}</div>
+      </div>
+      <button onClick={handleToAddress}>Change Address</button>
       {/* {JSON.stringify(cartContent)} */}
       <div>Items: {itemCount}</div>
       <div>Total amount: ${totalPrice}</div>
