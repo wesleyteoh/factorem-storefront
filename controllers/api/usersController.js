@@ -30,7 +30,8 @@ const create = async (req, res) => {
     const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
     const bcryptPassword = await bcrypt.hash(password, salt);
     // Entering new user into db
-    const newUser = await pool.query(
+    // const newUser = await pool.query(
+    await pool.query(
       "INSERT INTO accounts(user_name,user_email,user_password,user_date_created) VALUES ($1,$2,$3,now()) RETURNING *",
       [name, email, bcryptPassword]
     );
