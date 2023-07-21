@@ -7,6 +7,7 @@ import {
   updateUserDetails,
 } from "../../utilities/users-service";
 import AccountNavBar from "../../Components/AccountNavBar";
+import Loading from "../../Components/Loading";
 
 export default function AccountPage({ user }) {
   const [user1, setUser1] = useState("");
@@ -17,6 +18,7 @@ export default function AccountPage({ user }) {
   const [profileUserCountry, setProfileUserCountry] = useState("");
   const [profileUserPostalCode, setProfileUserPostalCode] = useState("");
   const [account, setProfileAccount] = useState("");
+  const [status, setStatus] = useState("idle");
 
   useEffect(() => {
     const loggedInUser = getUser();
@@ -43,6 +45,7 @@ export default function AccountPage({ user }) {
   };
 
   useEffect(() => {
+    setStatus("loading");
     try {
       const sendFormData = { ...user1 };
       if (Object.keys(sendFormData).length === 0) {
@@ -62,6 +65,7 @@ export default function AccountPage({ user }) {
             user_postal_code,
             account,
           } = await getUserDetails(sendFormData);
+          setStatus("success");
           if (user_address_line1 == null) {
             user_address_line1 = "";
           }
@@ -106,6 +110,11 @@ export default function AccountPage({ user }) {
     console.log(detailPayload);
     await updateUserDetails(detailPayload);
   };
+
+  if (status === "loading") {
+    return <Loading />;
+  }
+
   return (
     <>
       <AccountNavBar />

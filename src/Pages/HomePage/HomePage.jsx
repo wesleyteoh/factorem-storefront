@@ -8,9 +8,9 @@ export default function HomePage({ user }) {
   const [status, setStatus] = useState("idle");
 
   useEffect(() => {
+    setStatus("loading");
     async function getProducts() {
       const products = await sendRequest("/products", "GET");
-      setStatus("loading");
       setProducts(products);
       setStatus("success");
     }
