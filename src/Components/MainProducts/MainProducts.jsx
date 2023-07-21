@@ -7,6 +7,8 @@ export default function MainProducts({
   imageUrl,
   stock,
   altprice,
+  material,
+  id,
 }) {
   return (
     <>
@@ -19,7 +21,7 @@ export default function MainProducts({
           />
           <div className="flex flex-wrap mt-3">
             <Link
-              // to={`/products/${id}`}
+              to={`/products/${id}`}
               className="flex-auto text-xl font-semibold"
             >
               {name}
@@ -28,10 +30,11 @@ export default function MainProducts({
             <div className="text-xl font-semibold">
               {altprice === price ? "" : `$${altprice}`}
             </div>
+            <p>Material: {material}</p>
             <p className="w-full flex-none text-medium text-gray-500 mt-1">
-              {description}
+              Description: {description}
             </p>
-            <p>Stock Available:{stock}</p>
+            {/* <p>Stock Available:{stock}</p> */}
             {/* {user && renderUserInfo()} */}
           </div>
           <div className="flex space-x-3 font-medium items-center justify-between mt-6">

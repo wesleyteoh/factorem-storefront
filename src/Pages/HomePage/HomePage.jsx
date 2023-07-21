@@ -41,6 +41,8 @@ export default function HomePage({ user }) {
               description={product.description}
               imageUrl={product.image_link}
               stock={product.stock_avail}
+              material={product.material_category_name}
+              id={product.product_id}
             />
           </div>
         ))}
