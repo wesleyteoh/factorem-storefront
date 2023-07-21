@@ -15,3 +15,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 9. Admin can change item stock
 10. Admin can change item alternative pricing
 11. Admin can add new products
+12. Search function. Probably using LIKE
