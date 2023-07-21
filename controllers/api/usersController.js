@@ -44,7 +44,19 @@ const create = async (req, res) => {
       [email]
     );
     const token = createJWT(returnUser.rows[0]);
-    // const token = createJWT(newUser.rows[0].user_id);
+    const userId = returnUser.rows[0].user_id;
+    console.log("user_id", userId);
+    let getCart = await pool.query(
+      "SELECT * FROM orders WHERE order_paid=false and buyer_id=$1",
+      [userId]
+    );
+    if (getCart.rows[0] == null) {
+      console.log("no cart found, creating new cart");
+      getCart = await pool.query(
+        "INSERT INTO orders(order_date_created,buyer_id,order_status,order_paid) VALUES(now(),(SELECT user_id FROM accounts WHERE user_id = $1),(SELECT shipping_category_id FROM shipping_category where shipping_type = 'Order Placed'),FALSE )  RETURNING *",
+        [userId]
+      );
+    }
     res.json(token);
   } catch (err) {
     res.status(400).json(err);
