@@ -1,6 +1,6 @@
 const pool = require("../../config/database");
 
-async function addToCart(req, res) {
+async function viewCart(req, res) {
   const userId = req.params.userId;
   console.log("userId", userId);
   try {
@@ -84,4 +84,4 @@ async function checkout(req, res) {
   }
 }
 
-module.exports = { addToCart, checkout };
+module.exports = { viewCart, checkout };
