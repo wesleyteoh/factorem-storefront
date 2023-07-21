@@ -16,6 +16,7 @@ const port = process.env.PORT || 3001;
 // app.use("/api", require("./routes/api/music"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/products", require("./routes/api/products"));
+app.use("/api/history", require("./routes/api/history"));
 app.use("/api/cart", require("./routes/api/cart"));
 
 app.get("/hi", (req, res) => res.json({ msg: "hi" }));
