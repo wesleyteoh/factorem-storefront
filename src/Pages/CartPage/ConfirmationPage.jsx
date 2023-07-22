@@ -35,7 +35,7 @@ export default function ConfirmationPage() {
         try {
           const getCart = async () => {
             const cartRes = await sendRequest(
-              `/api/cart/${user.user_id}`,
+              `/api/cart/${user.user_id}/view`,
               "POST",
               {
                 email: user.user_email,
