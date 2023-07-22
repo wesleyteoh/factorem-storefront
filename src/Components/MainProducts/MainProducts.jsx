@@ -31,21 +31,21 @@ export default function MainProducts({
               {altprice === price ? "" : `$${altprice}`}
             </div>
             <p>Material: {material}</p>
-            <p className="w-full flex-none text-medium text-gray-500 mt-1">
+            {/* <p className="w-full flex-none text-medium text-gray-500 mt-1">
               Description: {description}
-            </p>
+            </p> */}
             {/* <p>Stock Available:{stock}</p> */}
             {/* {user && renderUserInfo()} */}
           </div>
           <div className="flex space-x-3 font-medium items-center justify-between mt-6">
-            <button
+            {/* <button
               // onClick={handleCart}
               className="addtocart_button"
               type="button"
             >
               Add to Cart
-              {/* {addedToCart ? <Added /> : 'Add to cart'} */}
-            </button>
+              {addedToCart ? <Added /> : 'Add to cart'}
+            </button> */}
             {/* <button
             onClick={handleWishlist}
             className="flex-none flex items-center justify-center w-9 h-9 rounded-md border-gray-200 border"

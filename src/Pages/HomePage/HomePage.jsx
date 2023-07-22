@@ -10,7 +10,7 @@ export default function HomePage({ user }) {
   useEffect(() => {
     setStatus("loading");
     async function getProducts() {
-      const products = await sendRequest("/products", "GET");
+      const products = await sendRequest("/products/all", "GET");
       setProducts(products);
       setStatus("success");
     }
