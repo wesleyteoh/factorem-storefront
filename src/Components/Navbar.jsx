@@ -30,10 +30,15 @@ export default function Navbar({ user, setUser }) {
         />
       </Link>
       {/* Navbar */}
-
-      <button onClick={handleCart}>
-        <div>Cart</div>
-      </button>
+      {user ? (
+        <>
+          <button onClick={handleCart}>
+            <div>Cart</div>
+          </button>
+        </>
+      ) : (
+        <></>
+      )}
 
       <div className="user-dropdown">
         <button className="user-nav-button" onClick={toggleDropdown}>
