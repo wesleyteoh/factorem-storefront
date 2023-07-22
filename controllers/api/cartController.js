@@ -84,4 +84,64 @@ async function checkout(req, res) {
   }
 }
 
-module.exports = { viewCart, checkout };
+async function addToCart(req, res) {
+  const userId = req.params.userId;
+  console.log("userId", userId);
+  const { product_id, product_price } = req.body;
+
+  try {
+    let getCart = await pool.query(
+      "SELECT * FROM orders WHERE order_paid=false and buyer_id=$1",
+      [userId]
+    );
+    const cartId = getCart.rows[0].order_id;
+    const ProductIdsInCart = await pool.query(
+      `SELECT products.product_id FROM orders 
+    LEFT JOIN order_item ON orders.order_id = order_item.order_id
+    LEFT JOIN products ON order_item.product_id = products.product_id
+    LEFT JOIN shipping_category on orders.order_status = shipping_category.shipping_category_id
+    where orders.order_id = $1 and orders.buyer_id = $2`,
+      [cartId, userId]
+    );
+
+    const productExists = ProductIdsInCart.rows.some(
+      (item) => item.product_id === product_id
+    );
+    if (productExists) {
+      const item_quantity = await pool.query(
+        `SELECT order_quantity FROM orders
+        LEFT JOIN order_item ON orders.order_id = order_item.order_id
+        LEFT JOIN products ON order_item.product_id = products.product_id
+        LEFT JOIN shipping_category ON orders.order_status = shipping_category.shipping_category_id
+        WHERE orders.order_id = $1 AND orders.buyer_id = $2 AND products.product_id=$3
+          AND order_item.product_id = products.product_id`,
+        [cartId, userId, product_id]
+      );
+
+      await pool.query(
+        `UPDATE order_item AS oi1
+      SET order_quantity = $1
+      FROM orders
+      LEFT JOIN order_item AS oi2 ON orders.order_id = oi2.order_id
+      LEFT JOIN products ON oi2.product_id = products.product_id
+      LEFT JOIN shipping_category ON orders.order_status = shipping_category.shipping_category_id
+      WHERE orders.order_id = $2 AND orders.buyer_id = $3 AND products.product_id = $4
+        AND oi1.product_id = products.product_id`,
+        [item_quantity.rows[0].order_quantity + 1, cartId, userId, product_id]
+      );
+      //   res.json(item_quantity.rows[0].order_quantity);
+      res.json("update cart success");
+    } else {
+      await pool.query(
+        `INSERT INTO order_item(order_id,product_id,order_quantity,unit_price) VALUES ((SELECT order_id FROM orders WHERE order_id = $1),(SELECT product_id FROM products WHERE product_id = $2),1,$3)`,
+        [cartId, product_id, product_price]
+      );
+      res.json("add to cart success");
+    }
+    // res.json(ProductIdsInCart.rows);
+  } catch (err) {
+    console.log(err);
+    res.status(401).json("Add to cart failed");
+  }
+}
+module.exports = { viewCart, checkout, addToCart };
