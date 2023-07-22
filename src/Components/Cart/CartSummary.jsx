@@ -1,7 +1,10 @@
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
+
+import { useEffect } from "react";
 
 export default function CartSummary({
   cartContent,
+  setTotalItems,
   profileUserAddressLine1,
   profileUserAddressLine2,
   profileUserCity,
@@ -18,7 +21,9 @@ export default function CartSummary({
     totalPrice =
       totalPrice + cartContent[i].order_quantity * cartContent[i].unit_price;
   }
-
+  useEffect(() => {
+    setTotalItems(itemCount);
+  });
   // const handleToAddress = (event) => {
   //   event.preventDefault();
   //   navigate("/users/profile");

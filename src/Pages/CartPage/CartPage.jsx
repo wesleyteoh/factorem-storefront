@@ -19,6 +19,7 @@ export default function CartPage() {
   const navigate = useNavigate();
   const [status, setStatus] = useState("idle");
   const [cartChanged, setCartChanged] = useState(false);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     setStatus("loading");
@@ -93,35 +94,18 @@ export default function CartPage() {
     event.preventDefault();
     console.log(cartContent[0].order_id);
     navigate("/checkout", { state: "checkoutState" });
-    // try {
-    //   const checkOutRes = await sendRequest(
-    //     `/api/cart/${user.user_id}/checkout`,
-    //     "POST",
-    //     {
-    //       email: user.user_email,
-    //       order_id: cartContent[0].order_id,
-    //     }
-    //   );
-    //   console.log(checkOutRes);
-    //   if (checkOutRes === "checkout success") {
-    //     console.log("ok");
-    //     navigate("/users/history");
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
-
+  const disabled = totalItems === 0;
+  //   console.log("totalItems", totalItems);
+  //   console.log("cartC", cartContent[0].map.order_item_id);
   if (status === "loading") {
     return <Loading />;
   }
   return (
     <>
       Cart Page
-      <div>{JSON.stringify(user)}</div>
-      <div>{JSON.stringify(cartContent)}</div>
-      <div>Cart lenfgth{JSON.stringify(cartContent)}</div>
-      {/* {cartContent[0].product_id !== null ? "yes" : "Add something to cart!"} */}
+      {/* <div>{JSON.stringify(user)}</div>
+      <div>{JSON.stringify(cartContent)}</div> */}
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
           <CartItems
@@ -141,6 +125,7 @@ export default function CartPage() {
           <div>Order Summary</div>
           <CartSummary
             cartContent={cartContent}
+            setTotalItems={setTotalItems}
             // profileUserAddressLine1={profileUserAddressLine1}
             // profileUserAddressLine2={profileUserAddressLine2}
             // profileUserCity={profileUserCity}
@@ -148,7 +133,7 @@ export default function CartPage() {
             // profileUserPostalCode={profileUserPostalCode}
             // profileContact={profileContact}
           />
-          <button>Checkout</button>
+          <button disabled={disabled}>Checkout</button>
         </form>
       </fieldset>
     </>
