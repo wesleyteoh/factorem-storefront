@@ -107,6 +107,7 @@ async function addToCart(req, res) {
     const productExists = ProductIdsInCart.rows.some(
       (item) => item.product_id === product_id
     );
+    console.log(productExists);
     if (productExists) {
       const item_quantity = await pool.query(
         `SELECT order_quantity FROM orders

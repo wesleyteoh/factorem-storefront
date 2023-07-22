@@ -96,7 +96,7 @@ export default function ConfirmationPage() {
     }
   }, []);
 
-  const handleAddtoCart = async (event) => {
+  const handleCheckout = async (event) => {
     event.preventDefault();
     console.log(cartContent[0].order_id);
     try {
@@ -140,7 +140,7 @@ export default function ConfirmationPage() {
         </div>
       ))}
       <fieldset>
-        <form onSubmit={handleAddtoCart}>
+        <form onSubmit={handleCheckout}>
           <div>Order Summary</div>
           <ConfirmationSummary
             cartContent={cartContent}
