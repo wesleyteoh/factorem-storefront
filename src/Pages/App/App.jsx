@@ -13,6 +13,7 @@ import Unauthorised from "../../Components/Unauthorised";
 import HistoryPage from "../HistoryPage/HistoryPage";
 import ConfirmationPage from "../CartPage/ConfirmationPage";
 import ProductPage from "../ProductPage/ProductPage";
+import SearchPage from "../SearchPage/SearchPage";
 
 export default function App() {
   const [user, setUser] = useState("");
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/users/history" element={<HistoryPage />} />
           <Route path="/cart" element={<CartPage user={user} />} />
           <Route path="/checkout" element={<ConfirmationPage user={user} />} />
+          <Route path="/products/search/:searchTerm" element={<SearchPage />} />
           <Route path="/products/:productId" element={<ProductPage />} />
           <Route path="/unauthorised" element={<Unauthorised />} />
         </Routes>
