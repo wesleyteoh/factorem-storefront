@@ -92,7 +92,7 @@ async function checkout(req, res) {
           [userId]
         );
         if (getCart.rows[0] == null) {
-          console.log("no cart found, creating new cart");
+          console.log("checkout success, creating new cart");
           getCart = await pool.query(
             "INSERT INTO orders(order_date_created,buyer_id,order_status,order_paid) VALUES(now(),(SELECT user_id FROM accounts WHERE user_id = $1),(SELECT shipping_category_id FROM shipping_category where shipping_type = 'Order Placed'),FALSE )  RETURNING *",
             [userId]
