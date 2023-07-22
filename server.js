@@ -10,8 +10,7 @@ const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
-
-const port = process.env.PORT || 3001;
+app.use(require("./config/checkToken"));
 
 // app.use("/api", require("./routes/api/music"));
 app.use("/api/users", require("./routes/api/users"));
@@ -25,6 +24,7 @@ app.get("/hi", (req, res) => res.json({ msg: "hi" }));
 app.get("/*", (req, res) =>
   res.sendFile(path.join(__dirname, "build", "index.html"))
 );
+const port = process.env.PORT || 3001;
 
 app.listen(port, function () {
   console.log(`Express app running on port ${port}`);

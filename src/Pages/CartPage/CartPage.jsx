@@ -34,6 +34,7 @@ export default function CartPage() {
             "POST",
             {
               email: user.user_email,
+              user: user.user_id,
             }
           );
           setCartContent(cartRes);
