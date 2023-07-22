@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import sendRequest from "../../utilities/send-request";
 import Loading from "../../Components/Loading";
 import MainProducts from "../../Components/MainProducts/MainProducts";
+import { useNavigate } from "react-router";
 
 export default function HomePage({ user }) {
   const [products, setProducts] = useState(null);
   const [status, setStatus] = useState("idle");
+  const navigate = useNavigate();
+  const [searchTermState, setSearchTermState] = useState("");
+  const handleChange = (event) => {
+    setSearchTermState(event.target.value);
+  };
 
   useEffect(() => {
     setStatus("loading");
@@ -16,6 +22,13 @@ export default function HomePage({ user }) {
     }
     getProducts();
   }, []);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!searchTermState) {
+      return;
+    }
+    navigate(`/products/search/${searchTermState}`);
+  };
 
   if (status === "loading") {
     return <Loading />;
@@ -25,6 +38,20 @@ export default function HomePage({ user }) {
         <h1>Main Page</h1>
         User:{JSON.stringify(user)}
         Products: {JSON.stringify(products)}
+        <form onSubmit={handleSubmit}>
+          <label>
+            <input
+              type="text"
+              name="searchField"
+              className="input"
+              value={searchTermState}
+              placeholder="Search term"
+              onChange={handleChange}
+              required
+            />
+            <button>Search</button>
+          </label>
+        </form>
         {products?.map((product) => (
           <div key={product.product_id} className="productGrid">
             <MainProducts
