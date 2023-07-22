@@ -29,7 +29,7 @@ async function getOneProduct(req, res) {
     );
 
     res.status(200).json(rows);
-    res.json(productId);
+    // res.json(productId);
   } catch (error) {
     console.error("Error executing query:", error);
     res.json("could not get all products");
