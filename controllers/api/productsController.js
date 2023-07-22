@@ -12,6 +12,7 @@ async function getAllProducts(req, res) {
     res.status(200).json(rows);
   } catch (error) {
     console.error("Error executing query:", error);
+    res.status(500).json("could not get product");
   }
 }
 async function getOneProduct(req, res) {
@@ -32,8 +33,24 @@ async function getOneProduct(req, res) {
     // res.json(productId);
   } catch (error) {
     console.error("Error executing query:", error);
-    res.json("could not get all products");
+    res.status(500).json("could not get product");
   }
 }
 
-module.exports = { getAllProducts, getOneProduct };
+async function getSearchedProduct(req, res) {
+  const searchTerm = req.params.searchTerm;
+  console.log(searchTerm);
+  try {
+    const { rows } = await pool.query(`SELECT *
+    FROM products
+    JOIN material_category ON products.material = material_category.material_category_id
+    JOIN main_category ON products.category_id = main_category.main_category_id
+    WHERE product_active = true
+    AND (product_name LIKE '%${searchTerm}%' OR products.description LIKE '%${searchTerm}%')`);
+    res.status(200).json(rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+}
+module.exports = { getAllProducts, getOneProduct, getSearchedProduct };
