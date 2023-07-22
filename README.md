@@ -12,7 +12,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 6. Users and admin can view order number and details
 7. Admin can change the order shipping status
 8. Admin can change item active or not
-9. Admin can change item stock
-10. Admin can change item alternative pricing
-11. Admin can add new products
-12. Search function. Probably using LIKE
+9. Admin can change item alternative pricing
+10. Admin can add new products
+11. Search function. 
+
+## Task management and tracking
+[Trello](https://trello.com/b/GqhQpcf6/factorem-storefront)
