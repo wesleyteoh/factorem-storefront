@@ -145,4 +145,33 @@ async function addToCart(req, res) {
     res.status(401).json("Add to cart failed");
   }
 }
-module.exports = { viewCart, checkout, addToCart };
+
+async function deleteOneCartItem(req, res) {
+  const { order_id, product_id } = req.body;
+  const userId = req.params.userId;
+  const checkCartId = await pool.query(
+    `SELECT orders.order_id FROM orders
+    LEFT JOIN order_item ON orders.order_id = order_item.order_id
+    LEFT JOIN products ON order_item.product_id = products.product_id
+    LEFT JOIN shipping_category on orders.order_status = shipping_category.shipping_category_id
+    where orders.buyer_id=$1 and orders.order_paid=false`,
+    [userId]
+  );
+
+  try {
+    if (order_id === checkCartId.rows[0].order_id) {
+      await pool.query(
+        `DELETE from order_item
+              where order_id=$1 and product_id=$2`,
+        [order_id, product_id]
+      );
+      res.json("delete success");
+    } else {
+      throw new Error();
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(403).json("could not delete item");
+  }
+}
+module.exports = { viewCart, checkout, addToCart, deleteOneCartItem };

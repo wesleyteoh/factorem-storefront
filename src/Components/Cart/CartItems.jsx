@@ -21,10 +21,10 @@ export default function CartItems({
           <img
             className="h-28 rounded transform hover:scale-105 transition"
             src={imgLink}
-            alt={product.name}
+            alt={product}
           />
           <div className="flex flex-col justify-between">
-            <p className="font-bold text-lg">{product.name}</p>
+            <p className="font-bold text-lg">{product}</p>
             <p className="text-gray-900 font-semibold">${price}</p>
 
             <p className="text-gray-500">
