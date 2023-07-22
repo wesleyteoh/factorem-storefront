@@ -43,7 +43,9 @@ export default function ConfirmationItems({
             +
           </button> */}
         </div>
-        <p className="text-lg font-semibold">${price * quantity}</p>
+        <p className="text-lg font-semibold">
+          ${(price * quantity).toFixed(2)}
+        </p>
       </div>
       {/* ); */}
       {/* }; */}
