@@ -71,7 +71,8 @@ async function checkout(req, res) {
       } else {
         await pool.query(
           `UPDATE orders
-              SET order_paid = true
+              SET order_paid = true,
+              order_date_created = now()
               WHERE order_id=$1`,
           [order_id]
         );

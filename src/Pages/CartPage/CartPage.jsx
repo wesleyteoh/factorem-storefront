@@ -120,6 +120,8 @@ export default function CartPage() {
       Cart Page
       <div>{JSON.stringify(user)}</div>
       <div>{JSON.stringify(cartContent)}</div>
+      <div>Cart lenfgth{JSON.stringify(cartContent)}</div>
+      {/* {cartContent[0].product_id !== null ? "yes" : "Add something to cart!"} */}
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
           <CartItems
