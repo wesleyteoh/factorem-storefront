@@ -123,6 +123,7 @@ export default function CartPage() {
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
           <CartItems
+            userId={user.user_id}
             cartId={cart.order_id}
             product={cart.product_name}
             productId={cart.product_id}

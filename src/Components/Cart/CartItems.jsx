@@ -1,3 +1,5 @@
+import sendRequest from "../../utilities/send-request";
+
 export default function CartItems({
   product,
   price,
@@ -6,12 +8,22 @@ export default function CartItems({
   productId,
   cartId,
   setCartChanged,
+  userId,
 }) {
   const handleRemoveItem = async (event) => {
     console.log("productId", productId);
     console.log("cartId", cartId);
+    console.log("userId", userId);
     console.log("HANDLE REMOVE ITEM CLICKED");
     event.preventDefault();
+    try {
+      await sendRequest(`/api/cart/${userId}/deleteOne`, "DELETE", {
+        order_id: parseInt(cartId),
+        product_id: productId,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     setCartChanged((prev) => !prev);
   };
   return (
