@@ -26,12 +26,7 @@ export default function HomePage({ user }) {
         User:{JSON.stringify(user)}
         Products: {JSON.stringify(products)}
         {products?.map((product) => (
-          <div key={product.product_id}>
-            {/* <CartItems
-              product={product.product_name}
-              price={product.price}
-              quantity={product.stock_avail}
-            /> */}
+          <div key={product.product_id} className="productGrid">
             <MainProducts
               name={product.product_name}
               price={product.price}
