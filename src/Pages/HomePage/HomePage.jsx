@@ -63,6 +63,7 @@ export default function HomePage({ user }) {
               stock={product.stock_avail}
               material={product.material_category_name}
               id={product.product_id}
+              material_category={product.main_category_name}
             />
           </div>
         ))}

@@ -9,6 +9,7 @@ export default function MainProducts({
   altprice,
   material,
   id,
+  material_category,
 }) {
   return (
     <>
@@ -24,11 +25,13 @@ export default function MainProducts({
           <Link to={`/products/${id}`} className="product-name">
             {name}
           </Link>
-          <div className="product-price">${price}</div>
+          <div className="product-price"> Price ${price}</div>
           <div className="product-altPrice">
-            {altprice === price ? "" : `$${altprice}`}
+            {altprice === price ? "" : `Special price: $${altprice}`}
           </div>
-          <p>Material: {material}</p>
+          <div>Category: {material_category}</div>
+          <div>Material: {material}</div>
+          <p></p>
         </div>
       </div>
       {/* </div> */}
