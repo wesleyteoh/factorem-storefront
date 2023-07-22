@@ -18,6 +18,7 @@ export default function CartPage() {
   const [profileContact, setProfileContact] = useState("");
   const navigate = useNavigate();
   const [status, setStatus] = useState("idle");
+  const [cartChanged, setCartChanged] = useState(false);
 
   useEffect(() => {
     setStatus("loading");
@@ -86,7 +87,7 @@ export default function CartPage() {
       console.log(err);
     }
     console.log("user", payloadDetail);
-  }, []);
+  }, [cartChanged]);
 
   const handleCheckout = async (event) => {
     event.preventDefault();
@@ -117,15 +118,18 @@ export default function CartPage() {
   return (
     <>
       Cart Page
-      <>{JSON.stringify(user)}</>
+      <div>{JSON.stringify(user)}</div>
       <div>{JSON.stringify(cartContent)}</div>
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
           <CartItems
+            cartId={cart.order_id}
             product={cart.product_name}
+            productId={cart.product_id}
             price={cart.unit_price}
             quantity={cart.order_quantity}
             imgLink={cart.image_link}
+            setCartChanged={setCartChanged}
           />
         </div>
       ))}

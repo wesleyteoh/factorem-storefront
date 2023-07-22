@@ -1,4 +1,19 @@
-export default function CartItems({ product, price, quantity, imgLink }) {
+export default function CartItems({
+  product,
+  price,
+  quantity,
+  imgLink,
+  productId,
+  cartId,
+  setCartChanged,
+}) {
+  const handleRemoveItem = async (event) => {
+    console.log("productId", productId);
+    console.log("cartId", cartId);
+    console.log("HANDLE REMOVE ITEM CLICKED");
+    event.preventDefault();
+    setCartChanged((prev) => !prev);
+  };
   return (
     <>
       <div className="flex justify-between items-center p-3">
@@ -15,12 +30,7 @@ export default function CartItems({ product, price, quantity, imgLink }) {
             <p className="text-gray-500">
               Quantity: <strong>{quantity}</strong>
             </p>
-            <p
-              className="text-red-500 text-xs cursor-pointer"
-              // onClick={() => removeItem(id)}
-            >
-              Remove
-            </p>
+            <button onClick={handleRemoveItem}>Remove</button>
           </div>
         </div>
         <div className="flex gap-4">
