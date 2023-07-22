@@ -40,7 +40,7 @@ async function getHistory(req, res) {
           //   product_dimen_z: item.product_dimen_z,
           //   datasheet: item.datasheet,
           leadtime: item.leadtime,
-          shipping_category_id: item.shipping_category_id,
+          //   shipping_category_id: item.shipping_category_id,
           shipping_type: item.shipping_type,
         });
       } else {
@@ -70,7 +70,7 @@ async function getHistory(req, res) {
               //   product_dimen_z: item.product_dimen_z,
               //   datasheet: item.datasheet,
               leadtime: item.leadtime,
-              shipping_category_id: item.shipping_category_id,
+              //   shipping_category_id: item.shipping_category_id,
               shipping_type: item.shipping_type,
             },
           ],
@@ -79,6 +79,7 @@ async function getHistory(req, res) {
 
       return result;
     }, []);
+    // });
     // reduce fn end
 
     res.json(consolidatedData);

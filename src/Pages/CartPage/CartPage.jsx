@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import sendRequest from "../../utilities/send-request";
 import { getUser, getUserDetails } from "../../utilities/users-service";
 import { useNavigate } from "react-router";
-import CartItems from "../../Components/Cart/CartItems";
 import CartSummary from "../../Components/Cart/CartSummary";
 import Loading from "../../Components/Loading";
+import CartItems from "../../Components/Cart/CartItems";
 
 export default function CartPage() {
   const [cartContent, setCartContent] = useState(null);
@@ -88,26 +88,27 @@ export default function CartPage() {
     console.log("user", payloadDetail);
   }, []);
 
-  const handleAddtoCart = async (event) => {
+  const handleCheckout = async (event) => {
     event.preventDefault();
     console.log(cartContent[0].order_id);
-    try {
-      const checkOutRes = await sendRequest(
-        `/api/cart/${user.user_id}/checkout`,
-        "POST",
-        {
-          email: user.user_email,
-          order_id: cartContent[0].order_id,
-        }
-      );
-      console.log(checkOutRes);
-      if (checkOutRes === "checkout success") {
-        console.log("ok");
-        navigate("/users/history");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    navigate("/checkout", { state: "checkoutState" });
+    // try {
+    //   const checkOutRes = await sendRequest(
+    //     `/api/cart/${user.user_id}/checkout`,
+    //     "POST",
+    //     {
+    //       email: user.user_email,
+    //       order_id: cartContent[0].order_id,
+    //     }
+    //   );
+    //   console.log(checkOutRes);
+    //   if (checkOutRes === "checkout success") {
+    //     console.log("ok");
+    //     navigate("/users/history");
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   if (status === "loading") {
@@ -129,18 +130,18 @@ export default function CartPage() {
         </div>
       ))}
       <fieldset>
-        <form onSubmit={handleAddtoCart}>
+        <form onSubmit={handleCheckout}>
           <div>Order Summary</div>
           <CartSummary
             cartContent={cartContent}
-            profileUserAddressLine1={profileUserAddressLine1}
-            profileUserAddressLine2={profileUserAddressLine2}
-            profileUserCity={profileUserCity}
-            profileUserCountry={profileUserCountry}
-            profileUserPostalCode={profileUserPostalCode}
-            profileContact={profileContact}
+            // profileUserAddressLine1={profileUserAddressLine1}
+            // profileUserAddressLine2={profileUserAddressLine2}
+            // profileUserCity={profileUserCity}
+            // profileUserCountry={profileUserCountry}
+            // profileUserPostalCode={profileUserPostalCode}
+            // profileContact={profileContact}
           />
-          <button>Order</button>
+          <button>Checkout</button>
         </form>
       </fieldset>
     </>

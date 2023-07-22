@@ -11,6 +11,7 @@ import SettingsPage from "../SettingsPage/SettingsPage";
 import CartPage from "../CartPage/CartPage";
 import Unauthorised from "../../Components/Unauthorised";
 import HistoryPage from "../HistoryPage/HistoryPage";
+import ConfirmationPage from "../CartPage/ConfirmationPage";
 
 export default function App() {
   const [user, setUser] = useState("");
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/users/setting" element={<SettingsPage user={user} />} />
           <Route path="/users/history" element={<HistoryPage />} />
           <Route path="/cart" element={<CartPage user={user} />} />
+          <Route path="/checkout" element={<ConfirmationPage user={user} />} />
           <Route path="/unauthorised" element={<Unauthorised />} />
         </Routes>
       </>
