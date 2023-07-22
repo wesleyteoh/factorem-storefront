@@ -20,6 +20,10 @@ export default function ProductPage() {
       setStatus("success");
     }
     getProducts();
+
+    if (user === null) {
+      setError("Log in to add to cart");
+    }
   }, []);
 
   const handleAddToCart = async (event) => {
@@ -37,6 +41,7 @@ export default function ProductPage() {
     }
   };
 
+  const disabled = user === null;
   const productsIsSet = products && products[0];
   if (status === "loading") {
     return <Loading />;
@@ -74,7 +79,9 @@ export default function ProductPage() {
           </Link>
         </div>
         <div>
-          <button onClick={handleAddToCart}>Add To Cart</button>
+          <button disabled={disabled} onClick={handleAddToCart}>
+            Add To Cart
+          </button>
           <span>{error}</span>
         </div>
       </>
