@@ -27,6 +27,7 @@ export default function CartItems({
     setCartChanged((prev) => !prev);
   };
 
+  const disabled = quantity === 1;
   console.log("productId", productId);
   if (productId === null) {
     return <div>No items in cart!</div>;
@@ -52,6 +53,7 @@ export default function CartItems({
           </div>
           <div className="flex gap-4">
             <button
+              disabled={disabled}
               //   onClick={() => decrease(id)}
               className="rounded-full h-8 w-8 flex items-center justify-center text-2xl border cursor-buttonointer transform hover:scale-125 transition"
             >
