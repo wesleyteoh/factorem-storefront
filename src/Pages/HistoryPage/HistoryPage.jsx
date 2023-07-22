@@ -3,6 +3,7 @@ import AccountNavBar from "../../Components/AccountNavBar";
 import { getUser } from "../../utilities/users-service";
 import sendRequest from "../../utilities/send-request";
 import Loading from "../../Components/Loading";
+import PastPurchases from "../../Components/PastPurchases/PastPurchases";
 
 export default function HistoryPage() {
   const [user, setUser] = useState(getUser());
@@ -22,7 +23,7 @@ export default function HistoryPage() {
     }
     getPastPurchases();
   }, []);
-
+  console.log("pastPurchases", pastPurchases);
   if (status === "loading") {
     return <Loading />;
   }
@@ -30,7 +31,36 @@ export default function HistoryPage() {
     <>
       <AccountNavBar />
       History Page
-      {JSON.stringify([pastPurchases])}
+      {/* {JSON.stringify([pastPurchases])} */}
+      {pastPurchases
+        ? pastPurchases?.map((purchases) => (
+            <div key={purchases.order_id}>
+              <fieldset>
+                <div>Order ID: {purchases.order_id}</div>
+                <div>
+                  Placed On: {convertDate(purchases.order_date_created)}
+                </div>
+                <PastPurchases purchases={purchases} />
+              </fieldset>
+            </div>
+          ))
+        : "no item found"}
     </>
   );
+}
+
+function convertDate(date) {
+  const dateObject = new Date(date);
+  // Get the time in Singapore time zone (UTC+8)
+  const singaporeTime = new Date(dateObject.getTime() + 8 * 60 * 60 * 1000);
+  const formattedDate = singaporeTime.toLocaleString("en-SG", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    timeZone: "Asia/Singapore",
+  });
+  return formattedDate;
 }

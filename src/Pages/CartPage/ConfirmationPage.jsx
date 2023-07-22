@@ -39,6 +39,7 @@ export default function ConfirmationPage() {
               "POST",
               {
                 email: user.user_email,
+                user: user.user_id,
               }
             );
             setCartContent(cartRes);

@@ -113,6 +113,15 @@ export default function Navbar({ user, setUser }) {
                     <div>Settings</div>
                   </Link>
                 )}
+              {
+                <Link
+                  className="user-nav-settings"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to={`/users/history`}
+                >
+                  <div>Past purchases</div>
+                </Link>
+              }
               <Link
                 className="user-nav-logout"
                 style={{ textDecoration: "none", color: "inherit" }}

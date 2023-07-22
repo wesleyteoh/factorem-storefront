@@ -8,6 +8,7 @@ async function getHistory(req, res) {
     LEFT JOIN order_item ON orders.order_id = order_item.order_id
     LEFT JOIN products ON order_item.product_id = products.product_id
     LEFT JOIN shipping_category on orders.order_status = shipping_category.shipping_category_id
+    LEFT JOIN material_category on products.material = material_category.material_category_id
     where orders.order_paid=true and orders.buyer_id = $1`,
       [userId]
     );
@@ -27,6 +28,7 @@ async function getHistory(req, res) {
           order_quantity: item.order_quantity,
           unit_price: item.unit_price,
           product_name: item.product_name,
+          material_category_name: item.material_category_name,
           //   price: item.price,
           //   alt_price: item.alt_price,
           image_link: item.image_link,
@@ -57,6 +59,7 @@ async function getHistory(req, res) {
               order_quantity: item.order_quantity,
               unit_price: item.unit_price,
               product_name: item.product_name,
+              material_category_name: item.material_category_name,
               //   price: item.price,
               //   alt_price: item.alt_price,
               image_link: item.image_link,

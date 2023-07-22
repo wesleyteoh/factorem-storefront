@@ -58,6 +58,7 @@ export default function ProductPage() {
         <div>Description: {products[0].description}</div>
         <div>Material: {products[0].material_category_name}</div>
         <div>Category: {products[0].main_category_name}</div>
+        <div>Lead time: {products[0].leadtime} days</div>
         <div>
           Dimensions: {products[0].product_dimen_x}cm x{" "}
           {products[0].product_dimen_y}cm x {products[0].product_dimen_z}cm
