@@ -111,6 +111,7 @@ export default function CartPage() {
       <div>{JSON.stringify(cartContent)}</div> */}
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
+          {JSON.stringify(cart)}
           <CartItems
             userId={user.user_id}
             cartId={cart.order_id}
@@ -120,6 +121,7 @@ export default function CartPage() {
             quantity={cart.order_quantity}
             imgLink={cart.image_link}
             setCartChanged={setCartChanged}
+            productActive={cart.product_active}
           />
         </div>
       ))}

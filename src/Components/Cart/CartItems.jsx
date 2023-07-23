@@ -9,6 +9,7 @@ export default function CartItems({
   cartId,
   setCartChanged,
   userId,
+  productActive,
 }) {
   const handleRemoveItem = async (event) => {
     // console.log("productId", productId);
@@ -41,14 +42,15 @@ export default function CartItems({
               className="h-28 rounded transform hover:scale-105 transition"
               src={imgLink}
               alt={product}
+              width="20%"
             />
             <div className="flex flex-col justify-between">
-              <p className="font-bold text-lg">{product}</p>
-              <p className="text-gray-900 font-semibold">${price}</p>
-
-              <p className="text-gray-500">
+              <div className="font-bold text-lg">{product}</div>
+              <div className="text-gray-900 font-semibold">${price}</div>
+              <div className="text-gray-500">
                 Quantity: <strong>{quantity}</strong>
-              </p>
+              </div>
+              {productActive ? <></> : <div>Product Discontinued</div>}
               <button onClick={handleRemoveItem}>Remove</button>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { getUser } from "../../utilities/users-service";
 import Loading from "../../Components/Loading";
 import sendRequest from "../../utilities/send-request";
 import { Link } from "react-router-dom";
+import Error404Page from "../Error404Page/Error404Page";
 
 export default function ProductPage() {
   const [user, setUser] = useState(getUser());
@@ -40,18 +41,21 @@ export default function ProductPage() {
       setError("Add to cart failed");
     }
   };
-
+  //   console.log(products);
   const disabled = user === null;
   const productsIsSet = products && products[0];
   if (status === "loading") {
     return <Loading />;
+  }
+  if (products?.length === 0) {
+    return <Error404Page />;
   } else if (productsIsSet) {
     return (
       <>
         {/* product page {productId}
         user:{JSON.stringify(user.user_id)}
-        <div>{JSON.stringify(user)}</div>
-        Products: {JSON.stringify(products)} */}
+        <div>{JSON.stringify(user)}</div> */}
+        {/* Products: {JSON.stringify(products)} */}
         <img width={"30%"} src={products[0].image_link} alt="product_image" />
         <div>Product: {products[0].product_name}</div>
         <div>Product Id: {products[0].product_id}</div>
@@ -79,6 +83,7 @@ export default function ProductPage() {
             Datasheet
           </Link>
         </div>
+        {products[0].product_active ? <></> : <div>Product Discontinued</div>}
         <div>
           <button disabled={disabled} onClick={handleAddToCart}>
             Add To Cart
