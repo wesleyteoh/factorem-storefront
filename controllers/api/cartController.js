@@ -36,8 +36,37 @@ async function viewCart(req, res) {
       //   Sometimes cart_id returns null when there are no products
       if (getCart.rows[0].order_id === null) {
         getCart.rows[0].order_id = cartId;
+        console.log("correcting cartId");
       }
+      // Check and update price
+      for (const checkProducts of getCart.rows) {
+        console.log("check product_id", checkProducts.product_id);
+        const pricesMatch =
+          checkProducts.unit_price === checkProducts.alt_price;
+        console.log("pricesMatch", pricesMatch);
+        if (!pricesMatch) {
+          await pool.query(`UPDATE order_item
+          set unit_price = ${checkProducts.alt_price}
+          WHERE order_id = ${cartId} and product_id=${checkProducts.product_id}`);
+        }
+      }
+      // End of check and update price
 
+      //   Get cart again after checks
+      getCart = await pool.query(
+        `SELECT * FROM orders
+            LEFT JOIN order_item ON orders.order_id = order_item.order_id
+            LEFT JOIN products ON order_item.product_id = products.product_id
+            LEFT JOIN shipping_category on orders.order_status = shipping_category.shipping_category_id
+            where orders.order_id=$1`,
+        [cartId]
+      );
+      //   Sometimes cart_id returns null when there are no products
+      if (getCart.rows[0].order_id === null) {
+        getCart.rows[0].order_id = cartId;
+        console.log("correcting cartId");
+      }
+      // End of getCart again
       res.json(getCart.rows);
     } else throw new Error();
   } catch (err) {
@@ -79,7 +108,7 @@ async function checkout(req, res) {
       }
       res.json("checkout success");
 
-      //   New cart after checkout
+      // Create new cart after checkout
       // Validate payload email with internal email
       const verifyOriginEmail = await pool.query(
         "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
