@@ -19,6 +19,7 @@ export default function AccountPage({ user }) {
   const [profileUserPostalCode, setProfileUserPostalCode] = useState("");
   const [account, setProfileAccount] = useState("");
   const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const loggedInUser = getUser();
@@ -108,7 +109,13 @@ export default function AccountPage({ user }) {
       payloadPostal: profileUserPostalCode,
     };
     console.log(detailPayload);
-    await updateUserDetails(detailPayload);
+    try {
+      await updateUserDetails(detailPayload);
+      setError("Address update success");
+    } catch (err) {
+      console.log(err);
+      setError("Address update failed");
+    }
   };
 
   if (status === "loading") {
@@ -183,6 +190,7 @@ export default function AccountPage({ user }) {
             ></input>
           </label>
           <button className="user-submit-button">Submit</button>
+          <div>{error}</div>
         </form>
       </fieldset>
     </>
