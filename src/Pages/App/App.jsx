@@ -18,6 +18,7 @@ import AdminAllOrdersPage from "../AdminPages/AdminAllOrders/AdminAllOrdersPage"
 import AdminAllProductsPage from "../AdminPages/AdminAllProductsPage/AdminAllProductsPage";
 import Error404Page from "../Error404Page/Error404Page";
 import AdminNavbar from "../../Components/AdminNavBar";
+import AdminHomeNavBar from "../../Components/AdminHomeNavBar";
 
 export default function App() {
   // const [user, setUser] = useState("");
@@ -48,6 +49,7 @@ export default function App() {
       {user?.user_type === "admin" ? (
         <>
           <AdminNavbar user={user} setUser={setUser} />
+          <AdminHomeNavBar />
           <Routes>
             <Route path="/" element={<HomePage user={user} />} />
             <Route
