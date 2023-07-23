@@ -8,20 +8,32 @@ export default function SearchPage() {
   const { searchTerm } = useParams();
   const [status, setStatus] = useState("idle");
   const [searchedProducts, setSearchedProducts] = useState(null);
-  const [searchTermState, setSearchTermState] = useState("");
+  const [searchTermState, setSearchTermState] = useState(searchTerm);
   const navigate = useNavigate();
   //   console.log(searchTerm);
   useEffect(() => {
     setStatus("loading");
+
     async function getProducts() {
-      const products = await sendRequest(
-        `/products/search/${searchTerm}`,
-        "GET"
-      );
-      setSearchedProducts(products);
-      setStatus("success");
+      try {
+        const products = await sendRequest(
+          `/products/search/${searchTerm}`,
+          "GET"
+        );
+        setSearchedProducts(products);
+        setStatus("success");
+      } catch (err) {
+        setStatus("success");
+        console.log(err);
+        // return <>No item found</>;
+      }
     }
+    // try {
     getProducts();
+    // } catch (err) {
+    //   console.log("error");
+    //   console.log(err);
+    // }
   }, [searchTerm]);
 
   const handleChange = (event) => {
@@ -29,11 +41,31 @@ export default function SearchPage() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!searchTermState) {
-      return;
-    }
+    // if (!searchTermState) {
+    //   return;
+    // }
     navigate(`/products/search/${searchTermState}`);
   };
+  // Attempt at debounce search
+  //   useEffect(() => {
+  //     let getData;
+  //     const fetchData = async () => {
+  //       try {
+  //         const responseData = await sendRequest(
+  //           `/products/search/${searchTermState}`,
+  //           "GET"
+  //         );
+  //         console.log(responseData[0]);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     };
+
+  //     getData = setTimeout(fetchData, 2000);
+
+  //     return () => clearTimeout(getData);
+  //   }, [searchTermState]);
+
   if (status === "loading") {
     return <Loading />;
   } else
@@ -51,6 +83,7 @@ export default function SearchPage() {
               required
             />
             <button>Search</button>
+            <small>Hint: You may use search by id using id:</small>
           </label>
         </form>
         {/* <div>{JSON.stringify(searchedProducts?.length)}</div> */}

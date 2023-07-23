@@ -40,17 +40,40 @@ async function getOneProduct(req, res) {
 async function getSearchedProduct(req, res) {
   const searchTerm = req.params.searchTerm;
   console.log(searchTerm);
-  try {
-    const { rows } = await pool.query(`SELECT *
-    FROM products
-    JOIN material_category ON products.material = material_category.material_category_id
-    JOIN main_category ON products.category_id = main_category.main_category_id
-    WHERE product_active = true
-    AND (product_name ILIKE '%${searchTerm}%' OR products.description ILIKE '%${searchTerm}%' OR material_category.material_category_name ILIKE '%${searchTerm}%')`);
-    res.status(200).json(rows);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+  if (searchTerm.startsWith("id:")) {
+    console.log("search by id");
+    const extractedNumber = searchTerm.replace("id:", "");
+    console.log(parseInt(extractedNumber));
+
+    if (!isNaN(extractedNumber)) {
+      try {
+        const { rows } = await pool.query(`SELECT *
+        FROM products
+        JOIN material_category ON products.material = material_category.material_category_id 
+        JOIN main_category ON products.category_id = main_category.main_category_id
+        WHERE product_active = true
+        AND product_id = ${extractedNumber}`);
+        res.status(200).json(rows);
+      } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(200).json("");
+    }
+  } else {
+    try {
+      const { rows } = await pool.query(`SELECT *
+      FROM products
+      JOIN material_category ON products.material = material_category.material_category_id
+      JOIN main_category ON products.category_id = main_category.main_category_id
+      WHERE product_active = true
+      AND (product_name ILIKE '%${searchTerm}%' OR products.description ILIKE '%${searchTerm}%' OR material_category.material_category_name ILIKE '%${searchTerm}%')`);
+      res.status(200).json(rows);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
   }
 }
 module.exports = { getAllProducts, getOneProduct, getSearchedProduct };
