@@ -1,9 +1,14 @@
+import { useState } from "react";
+
 export default function AdminAllOrders({ purchases }) {
+  const [status, setStatus] = useState("");
+
   return (
     <>
       {/* Pastpurchases */}
       {/* {JSON.stringify(purchases)} */}
       <div>
+        <button>Update status</button>
         {purchases.products.map((item) => (
           <div key={item.product_id}>
             <fieldset>

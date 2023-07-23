@@ -18,6 +18,7 @@ app.use("/products", require("./routes/api/products"));
 app.use("/api/history", require("./routes/api/history"));
 app.use("/api/cart", require("./routes/api/cart"));
 app.use("/api/adminSide", require("./routes/api/admin"));
+app.use("/api/shipping", require("./routes/api/shipping"));
 
 app.get("/hi", (req, res) => res.json({ msg: "hi" }));
 
