@@ -44,7 +44,7 @@ export default function HistoryPage() {
               </fieldset>
             </div>
           ))
-        : "no item found"}
+        : "no items found"}
     </>
   );
 }
