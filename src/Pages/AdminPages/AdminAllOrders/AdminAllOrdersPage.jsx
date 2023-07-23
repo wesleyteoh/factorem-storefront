@@ -8,7 +8,7 @@ import sendRequest from "../../../utilities/send-request";
 import Loading from "../../../Components/Loading";
 import AdminAllOrders from "../../../Components/Admin/AdminAllOrders";
 
-export default function HistoryPage() {
+export default function AdminAllOrdersPage() {
   const [user, setUser] = useState(getUser());
   const [pastPurchases, setPastPurchases] = useState("");
   const [shippingCategories, setShippingCategories] = useState([]);
@@ -46,7 +46,7 @@ export default function HistoryPage() {
   return (
     <>
       {/* <AccountNavBar /> */}
-      History Page
+      Admin All Orders Page
       {/* {JSON.stringify([pastPurchases])} */}
       {pastPurchases
         ? pastPurchases?.map((purchases) => (
