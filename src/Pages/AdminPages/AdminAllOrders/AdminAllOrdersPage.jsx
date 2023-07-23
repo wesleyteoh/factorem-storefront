@@ -11,6 +11,7 @@ import AdminAllOrders from "../../../Components/Admin/AdminAllOrders";
 export default function HistoryPage() {
   const [user, setUser] = useState(getUser());
   const [pastPurchases, setPastPurchases] = useState("");
+  const [shippingCategories, setShippingCategories] = useState([]);
   const [status, setStatus] = useState("idle");
   console.log(user);
   useEffect(() => {
@@ -27,7 +28,16 @@ export default function HistoryPage() {
         console.log(err);
       }
     }
+    async function getShippingCategories() {
+      try {
+        const shippingRes = await sendRequest("/api/shipping", "GET");
+        setShippingCategories(shippingRes);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     getPastPurchases();
+    getShippingCategories();
   }, []);
   console.log("pastPurchases", pastPurchases);
   if (status === "loading") {
@@ -55,7 +65,11 @@ export default function HistoryPage() {
                 <div>
                   Placed On: {convertDate(purchases.order_date_created)}
                 </div>
-                <AdminAllOrders purchases={purchases} />
+                <AdminAllOrders
+                  purchases={purchases}
+                  shippingCategories={shippingCategories}
+                  orderId={purchases.order_id}
+                />
               </fieldset>
             </div>
           ))

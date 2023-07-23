@@ -20,7 +20,7 @@ async function getHistory(req, res) {
       const existingOrder = result.find(
         (order) => order.order_id === item.order_id
       );
-      console.log("existingOrder", existingOrder);
+      // console.log("existingOrder", existingOrder);
       if (existingOrder) {
         existingOrder.products.push({
           order_item_id: item.order_item_id,

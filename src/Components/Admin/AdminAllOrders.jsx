@@ -1,14 +1,49 @@
 import { useState } from "react";
 
-export default function AdminAllOrders({ purchases }) {
-  const [status, setStatus] = useState("");
+export default function AdminAllOrders({
+  purchases,
+  shippingCategories,
+  orderId,
+}) {
+  const [productStatus, setProductStatus] = useState(purchases.order_status);
+
+  const handleShippingChange = (event) => {
+    setProductStatus(event.target.value);
+  };
+
+  function getShippingType(shippingCategoryId) {
+    const shippingObject = shippingCategories.find(
+      (item) => item.shipping_category_id === shippingCategoryId
+    );
+    return shippingObject
+      ? shippingObject.shipping_type
+      : "Shipping type not found";
+  }
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    console.log("shippingStatus", productStatus);
+    console.log("OrderId", orderId);
+  };
 
   return (
     <>
       {/* Pastpurchases */}
       {/* {JSON.stringify(purchases)} */}
+      {/* {JSON.stringify(shippingCategories)} */}
       <div>
-        <button>Update status</button>
+        <div>Current status: {getShippingType(purchases.order_status)}</div>
+        <select onChange={handleShippingChange} value={productStatus}>
+          {shippingCategories.map((shipping) => (
+            <option
+              key={shipping.shipping_category_id}
+              value={shipping.shipping_category_id}
+            >
+              {shipping.shipping_type}
+            </option>
+          ))}
+        </select>
+        <button onClick={handleClick}>Update status</button>
         {purchases.products.map((item) => (
           <div key={item.product_id}>
             <fieldset>
