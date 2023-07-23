@@ -65,6 +65,10 @@ export default function AdminAllOrdersPage() {
                 <div>
                   Placed On: {convertDate(purchases.order_date_created)}
                 </div>
+                <div>
+                  Total({calculateTotalQuantity(purchases.products)} Items): $
+                  {calculateTotalPrice(purchases.products)}
+                </div>
                 <AdminAllOrders
                   purchases={purchases}
                   shippingCategories={shippingCategories}
@@ -92,4 +96,23 @@ function convertDate(date) {
     timeZone: "Asia/Singapore",
   });
   return formattedDate;
+}
+
+function calculateTotalPrice(products) {
+  let totalPrice = 0;
+  for (const product of products) {
+    const quantity = parseInt(product.order_quantity);
+    const unitPrice = parseFloat(product.unit_price);
+    totalPrice += quantity * unitPrice;
+  }
+  return totalPrice.toFixed(2); // To round the total price to 2 decimal places
+}
+
+function calculateTotalQuantity(products) {
+  let totalQuantity = 0;
+  for (const product of products) {
+    const quantity = parseInt(product.order_quantity);
+    totalQuantity += quantity;
+  }
+  return totalQuantity;
 }
