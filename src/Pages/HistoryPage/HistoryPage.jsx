@@ -15,7 +15,12 @@ export default function HistoryPage() {
     async function getPastPurchases() {
       try {
         const res = await sendRequest(`/api/history/${user.user_id}/`, "GET");
-        setPastPurchases(res);
+        setPastPurchases(
+          res.sort(
+            (a, b) =>
+              new Date(b.order_date_created) - new Date(a.order_date_created)
+          )
+        );
         setStatus("success");
       } catch (err) {
         console.log(err);

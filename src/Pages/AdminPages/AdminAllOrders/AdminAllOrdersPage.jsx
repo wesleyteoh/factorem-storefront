@@ -22,7 +22,15 @@ export default function AdminAllOrdersPage() {
           email: user.user_email,
           userId: user.user_id,
         });
-        setPastPurchases(res);
+        // Sort by id
+        // setPastPurchases(res.sort((a, b) => b.order_id - a.order_id));
+        // Sort by date
+        setPastPurchases(
+          res.sort(
+            (a, b) =>
+              new Date(b.order_date_created) - new Date(a.order_date_created)
+          )
+        );
         setStatus("success");
       } catch (err) {
         console.log(err);
