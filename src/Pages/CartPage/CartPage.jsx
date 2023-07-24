@@ -98,22 +98,26 @@ export default function CartPage() {
     console.log(cartContent[0].order_id);
     navigate("/checkout", { state: "checkoutState" });
   };
-  const disabled = totalItems === 0;
-  //   console.log("totalItems", totalItems);
-  //   console.log("cartC", cartContent[0].map.order_item_id);
+  const isAnyProductInactive = cartContent.some(
+    (item) => item.product_active === false
+  );
+  //   console.log("true?", isAnyProductInactive);
+  const disabled = totalItems === 0 || isAnyProductInactive;
   if (status === "loading") {
     return <Loading />;
   }
   return (
     <>
-      Cart Page
-      {/* <div>{JSON.stringify(user)}</div>
-      <div>{JSON.stringify(cartContent)}</div> */}
+      My cart
+      {/* <div>{JSON.stringify(user)}</div> */}
+      <div>{JSON.stringify(cartContent)}</div>
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
-          {JSON.stringify(cart)}
+          {/* {JSON.stringify(cart)} */}
           <CartItems
             userId={user.user_id}
+            userName={user.user_name}
+            email={user.user_email}
             cartId={cart.order_id}
             product={cart.product_name}
             productId={cart.product_id}
@@ -122,6 +126,7 @@ export default function CartPage() {
             imgLink={cart.image_link}
             setCartChanged={setCartChanged}
             productActive={cart.product_active}
+            // onProductQtyChange={handleProductQtyChange}
           />
         </div>
       ))}

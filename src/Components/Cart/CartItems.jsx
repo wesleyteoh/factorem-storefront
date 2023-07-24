@@ -1,5 +1,7 @@
 import { useState } from "react";
 import sendRequest from "../../utilities/send-request";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function CartItems({
   product,
@@ -9,8 +11,11 @@ export default function CartItems({
   productId,
   cartId,
   setCartChanged,
+  userName,
   userId,
   productActive,
+  email,
+  // onProductQtyChange,
 }) {
   const handleRemoveItem = async (event) => {
     // console.log("productId", productId);
@@ -32,20 +37,53 @@ export default function CartItems({
 
   const handleQtyChange = (event) => {
     event.preventDefault();
+
     if (
       !isNaN(event.target.value) &&
+      // Set minimum at 1 and maximum at 10000
       event.target.value >= 1 &&
       event.target.value <= 10000
     ) {
       setProductQty(event.target.value);
+      // onProductQtyChange(event.target.value);
     }
   };
   const handleUpdateQty = async (event) => {
     console.log("QTY", productQty);
+    console.log("email", email);
+    console.log("user", userName);
+    console.log("orderId", cartId);
+    console.log("productId", productId);
+    event.preventDefault();
+    try {
+      await sendRequest(`/api/cart/${userId}/update`, "PUT", {
+        user: userName,
+        email: email,
+        orderQty: productQty,
+        orderId: cartId,
+        productId: productId,
+      });
+      setOpenSuccess(true);
+    } catch (err) {
+      console.log(err);
+      setOpenFailed(true);
+    }
   };
 
-  const disabledMinus = quantity === 1;
-  const disabledAdd = quantity === 10000;
+  // MUI status messages
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFailed, setOpenFailed] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenFailed(false);
+    setOpenSuccess(false);
+  };
+
+  // const disabledMinus = quantity === 1;
+  // const disabledAdd = quantity === 10000;
   console.log("productId", productId);
   if (productId === null) {
     return <div>No items in cart!</div>;
@@ -72,10 +110,16 @@ export default function CartItems({
                   onChange={handleQtyChange}
                   value={productQty}
                 ></input>
-                <strong>{quantity}</strong>
+                {/* <strong>{quantity}</strong> */}
                 <button onClick={handleUpdateQty}>Update</button>
               </div>
-              {productActive ? <></> : <div>Product Discontinued</div>}
+              {productActive ? (
+                <></>
+              ) : (
+                <div style={{ color: "red", fontWeight: "bold" }}>
+                  Product Discontinued
+                </div>
+              )}
               <button onClick={handleRemoveItem}>Remove</button>
             </div>
           </div>
@@ -102,6 +146,28 @@ export default function CartItems({
         </div>
         {/* ); */}
         {/* }; */}
+        <Snackbar
+          open={openSuccess}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Update Quantity Successful
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={openFailed}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+            Change failed
+          </Alert>
+        </Snackbar>
       </>
     );
 }

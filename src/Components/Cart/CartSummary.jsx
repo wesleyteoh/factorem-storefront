@@ -42,7 +42,7 @@ export default function CartSummary({
       <button onClick={handleToAddress}>Change Address</button> */}
       {/* {JSON.stringify(cartContent)} */}
       <div>Items: {itemCount}</div>
-      <div>Total amount: ${totalPrice}</div>
+      <div>Total amount: ${totalPrice.toFixed(2)}</div>
     </>
   );
 }
