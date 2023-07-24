@@ -28,7 +28,6 @@ export default function AdminAllOrders({
 
   return (
     <>
-      {/* Pastpurchases */}
       {/* {JSON.stringify(purchases)} */}
       {/* {JSON.stringify(shippingCategories)} */}
       <div>

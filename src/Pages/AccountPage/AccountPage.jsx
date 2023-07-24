@@ -8,6 +8,9 @@ import {
 } from "../../utilities/users-service";
 import AccountNavBar from "../../Components/AccountNavBar";
 import Loading from "../../Components/Loading";
+import Snackbar from "@mui/material/Snackbar";
+import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
 
 export default function AccountPage({ user }) {
   const [user1, setUser1] = useState("");
@@ -44,7 +47,17 @@ export default function AccountPage({ user }) {
   const handlePostalChange = (event) => {
     setProfileUserPostalCode(event.target.value);
   };
+  // MUI messages
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFailed, setOpenFailed] = useState(false);
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenFailed(false);
+    setOpenSuccess(false);
+  };
   useEffect(() => {
     setStatus("loading");
     try {
@@ -111,10 +124,12 @@ export default function AccountPage({ user }) {
     console.log(detailPayload);
     try {
       await updateUserDetails(detailPayload);
-      setError("Address update success");
+
+      setOpenSuccess(true);
     } catch (err) {
       console.log(err);
-      setError("Address update failed");
+
+      setOpenFailed(true);
     }
   };
 
@@ -193,6 +208,20 @@ export default function AccountPage({ user }) {
           <div>{error}</div>
         </form>
       </fieldset>
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Change successful
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openFailed} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Change failed
+        </Alert>
+      </Snackbar>
     </>
   );
 }

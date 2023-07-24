@@ -36,7 +36,7 @@ export default function LogInForm({ setUser }) {
   return (
     <div>
       <div className="loginForm">
-        <form autoComplete="off" onSubmit={handleSubmit}>
+        <form autoComplete="on" onSubmit={handleSubmit}>
           <label>
             <input
               type="text"
