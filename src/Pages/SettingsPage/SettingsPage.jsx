@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import AccountNavBar from "../../Components/AccountNavBar";
 import { getUser, updateUserPass } from "../../utilities/users-service";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function SettingsPage() {
   const [user1, setUser1] = useState("");
@@ -42,11 +44,23 @@ export default function SettingsPage() {
     try {
       const updatePwd = await updateUserPass(payloadPassword);
       console.log(updatePwd);
-      setError("Password change success");
+      //   setError("Password change success");
+      setOpenSuccess(true);
     } catch (err) {
       console.log(err);
-      setError("Incorrect password. Try again");
+      //   setError("Incorrect password. Try again");
+      setOpenFailed(true);
     }
+  };
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFailed, setOpenFailed] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenFailed(false);
+    setOpenSuccess(false);
   };
   return (
     <>
@@ -86,6 +100,20 @@ export default function SettingsPage() {
         </div>
         <button disabled={disabled}>Submit</button>
       </form>
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Change successful
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openFailed} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Change failed
+        </Alert>
+      </Snackbar>
     </>
   );
 }

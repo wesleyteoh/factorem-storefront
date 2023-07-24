@@ -5,6 +5,8 @@ import Loading from "../../Components/Loading";
 import sendRequest from "../../utilities/send-request";
 import { Link } from "react-router-dom";
 import Error404Page from "../Error404Page/Error404Page";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function ProductPage() {
   const [user, setUser] = useState(getUser());
@@ -35,11 +37,25 @@ export default function ProductPage() {
         product_id: parseInt(productId),
         product_price: products[0].alt_price,
       });
-      setError("Added to cart!");
+      //   setError("Added to cart!");
+      setOpenSuccess(true);
     } catch (err) {
       console.log(err);
-      setError("Add to cart failed");
+      //   setError("Add to cart failed");
+      setOpenFailed(true);
     }
+  };
+
+  // MUI status messages
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFailed, setOpenFailed] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenFailed(false);
+    setOpenSuccess(false);
   };
   //   console.log(products);
   const disabled = user === null;
@@ -90,6 +106,28 @@ export default function ProductPage() {
           </button>
           <span>{error}</span>
         </div>
+        <Snackbar
+          open={openSuccess}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Added to cart
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={openFailed}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+            Something went wrong. Try refreshing the page.
+          </Alert>
+        </Snackbar>
       </>
     );
   }

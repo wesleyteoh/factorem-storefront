@@ -9,7 +9,6 @@ import {
 import AccountNavBar from "../../Components/AccountNavBar";
 import Loading from "../../Components/Loading";
 import Snackbar from "@mui/material/Snackbar";
-import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 
 export default function AccountPage({ user }) {
@@ -22,7 +21,6 @@ export default function AccountPage({ user }) {
   const [profileUserPostalCode, setProfileUserPostalCode] = useState("");
   const [account, setProfileAccount] = useState("");
   const [status, setStatus] = useState("idle");
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const loggedInUser = getUser();
@@ -124,11 +122,9 @@ export default function AccountPage({ user }) {
     console.log(detailPayload);
     try {
       await updateUserDetails(detailPayload);
-
       setOpenSuccess(true);
     } catch (err) {
       console.log(err);
-
       setOpenFailed(true);
     }
   };
@@ -205,7 +201,6 @@ export default function AccountPage({ user }) {
             ></input>
           </label>
           <button className="user-submit-button">Submit</button>
-          <div>{error}</div>
         </form>
       </fieldset>
       <Snackbar
