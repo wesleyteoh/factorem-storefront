@@ -6,12 +6,14 @@ async function viewCart(req, res) {
   try {
     const { email } = req.body;
     // Validate payload email with internal email
-    const verifyOriginEmail = await pool.query(
-      "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
-      [email, userId]
-    );
-    const match = email === verifyOriginEmail.rows[0].user_email;
-    if (match) {
+    const isEmailMatch = verifyEmailMatch(pool, email, userId);
+    // const verifyOriginEmail = await pool.query(
+    //   "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
+    //   [email, userId]
+    // );
+    // const match = email === verifyOriginEmail.rows[0].user_email;
+    // if (match) {
+    if (isEmailMatch) {
       let getCart = await pool.query(
         "SELECT * FROM orders WHERE order_paid=false and buyer_id=$1",
         [userId]
@@ -80,13 +82,15 @@ async function checkout(req, res) {
   try {
     const { email, order_id } = req.body;
     // Validate payload email with internal email
-    const verifyOriginEmail = await pool.query(
-      "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
-      [email, userId]
-    );
-    console.log(email, order_id);
-    const match = email === verifyOriginEmail.rows[0].user_email;
-    if (match) {
+    const isEmailMatch = verifyEmailMatch(pool, email, userId);
+    // const verifyOriginEmail = await pool.query(
+    //   "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
+    //   [email, userId]
+    // );
+    // console.log(email, order_id);
+    // const match = email === verifyOriginEmail.rows[0].user_email;
+    // if (match) {
+    if (isEmailMatch) {
       const order_status = await pool.query(
         `SELECT order_paid FROM orders where order_id = $1`,
         [order_id]

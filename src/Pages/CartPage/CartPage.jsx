@@ -98,9 +98,10 @@ export default function CartPage() {
     console.log(cartContent[0].order_id);
     navigate("/checkout", { state: "checkoutState" });
   };
-  const isAnyProductInactive = cartContent.some(
+  const isAnyProductInactive = cartContent?.some(
     (item) => item.product_active === false
   );
+  console.log(isAnyProductInactive);
   //   console.log("true?", isAnyProductInactive);
   const disabled = totalItems === 0 || isAnyProductInactive;
   if (status === "loading") {

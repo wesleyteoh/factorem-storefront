@@ -66,6 +66,13 @@ export default function AdminNewProductPage() {
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
+  const handleProductActive = (event) => {
+    setProductActive(event.target.value);
+  };
+  const handleProductDimenX = (event) => {
+    setProductDimenX(event.target.value);
+  };
+
   // end of onchanges
   return (
     <>
@@ -125,6 +132,15 @@ export default function AdminNewProductPage() {
               type="text"
               value={description}
               onChange={handleDescriptionChange}
+            ></input>
+          </label>
+          <label>
+            Product dimension X:
+            <input
+              className="profile-box"
+              type="number"
+              value={productDimenX}
+              onChange={handleProductDimenX}
             ></input>
           </label>
           <button className="user-submit-button">Submit</button>
