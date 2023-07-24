@@ -242,4 +242,49 @@ async function deleteOneCartItem(req, res) {
     res.status(403).json("could not delete item");
   }
 }
-module.exports = { viewCart, checkout, addToCart, deleteOneCartItem };
+
+async function updateQty(req, res) {
+  const userId = req.params.userId;
+  //   console.log("userId", userId);
+  const { email, orderQty, orderId, productId } = req.body;
+  //   console.log("orderQty", orderQty, "orderId", orderId, "productId", productId);
+  try {
+    const isEmailMatch = verifyEmailMatch(pool, email, userId);
+    if (isEmailMatch) {
+      console.log("verified by db");
+      try {
+        await pool.query(`UPDATE order_item
+        SET order_quantity = ${orderQty}
+        FROM orders
+        WHERE order_item.order_id = orders.order_id
+        AND orders.order_id = ${orderId}
+        AND order_item.product_id = ${productId};`);
+        res.json("update success");
+      } catch (err) {
+        throw new Error();
+      }
+    } else throw new Error();
+  } catch (err) {
+    console.log(err);
+    res.status(401).json("invalid request");
+  }
+}
+module.exports = {
+  viewCart,
+  checkout,
+  addToCart,
+  deleteOneCartItem,
+  updateQty,
+};
+
+// Functions
+async function verifyEmailMatch(pool, email, userId) {
+  // Validate payload email with internal email
+  const verifyOriginEmail = await pool.query(
+    "SELECT user_email FROM accounts WHERE user_email = $1 and user_id = $2",
+    [email, userId]
+  );
+
+  const match = email === verifyOriginEmail.rows[0]?.user_email;
+  return match;
+}

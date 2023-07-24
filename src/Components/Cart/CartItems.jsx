@@ -1,3 +1,4 @@
+import { useState } from "react";
 import sendRequest from "../../utilities/send-request";
 
 export default function CartItems({
@@ -27,6 +28,21 @@ export default function CartItems({
     }
     setCartChanged((prev) => !prev);
   };
+  const [productQty, setProductQty] = useState(parseInt(quantity));
+
+  const handleQtyChange = (event) => {
+    event.preventDefault();
+    if (
+      !isNaN(event.target.value) &&
+      event.target.value >= 1 &&
+      event.target.value <= 10000
+    ) {
+      setProductQty(event.target.value);
+    }
+  };
+  const handleUpdateQty = async (event) => {
+    console.log("QTY", productQty);
+  };
 
   const disabledMinus = quantity === 1;
   const disabledAdd = quantity === 10000;
@@ -48,14 +64,23 @@ export default function CartItems({
               <div className="font-bold text-lg">{product}</div>
               <div className="text-gray-900 font-semibold">${price}</div>
               <div className="text-gray-500">
-                Quantity: <strong>{quantity}</strong>
+                Quantity:{" "}
+                <input
+                  type="number"
+                  min="1"
+                  max="10000"
+                  onChange={handleQtyChange}
+                  value={productQty}
+                ></input>
+                <strong>{quantity}</strong>
+                <button onClick={handleUpdateQty}>Update</button>
               </div>
               {productActive ? <></> : <div>Product Discontinued</div>}
               <button onClick={handleRemoveItem}>Remove</button>
             </div>
           </div>
           <div className="flex gap-4">
-            <button
+            {/* <button
               disabled={disabledMinus}
               //   onClick={() => decrease(id)}
               className="rounded-full h-8 w-8 flex items-center justify-center text-2xl border cursor-buttonointer transform hover:scale-125 transition"
@@ -69,10 +94,10 @@ export default function CartItems({
               className="rounded-full h-8 w-8 flex items-center justify-center text-2xl border cursor-pointer transform hover:scale-125 transition"
             >
               +
-            </button>
+            </button> */}
           </div>
           <p className="text-lg font-semibold">
-            ${(price * quantity).toFixed(2)}
+            ${(price * productQty).toFixed(2)}
           </p>
         </div>
         {/* ); */}
