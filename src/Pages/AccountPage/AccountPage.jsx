@@ -45,7 +45,7 @@ export default function AccountPage({ user }) {
   const handlePostalChange = (event) => {
     setProfileUserPostalCode(event.target.value);
   };
-  // MUI messages
+  // MUI status messages
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailed, setOpenFailed] = useState(false);
 

@@ -3,13 +3,8 @@ const pool = require("../../config/database");
 async function viewAllOrders(req, res) {
   const { email, userId } = req.body;
   try {
-    // Validate payload email with internal email
-    const verifyOriginEmail = await pool.query(
-      "SELECT user_email FROM accounts WHERE user_email = $1 and user_id=$2",
-      [email, userId]
-    );
-    const match = email === verifyOriginEmail.rows[0].user_email;
-    if (match) {
+    const isEmailMatch = await verifyEmailMatch(pool, email, userId);
+    if (isEmailMatch) {
       console.log("verified by db");
 
       const getHistory = await pool.query(`SELECT * FROM orders 
@@ -108,4 +103,31 @@ async function viewAllOrders(req, res) {
     res.status(401).json("invalid request");
   }
 }
-module.exports = { viewAllOrders };
+
+async function updateShipping(req, res) {
+  const { email, user, shippingStatus, orderId } = req.body;
+  try {
+    const isEmailMatch = await verifyEmailMatch(pool, email, user);
+    if (isEmailMatch) {
+      const shippingRes = await pool.query(`UPDATE orders
+      SET order_status = ${shippingStatus}
+      WHERE order_id = ${orderId} RETURNING order_status`);
+      res.json(shippingRes.rows[0]);
+    } else {
+      res.status(401).json("unauthorized");
+    }
+  } catch (err) {
+    res.status(401).json(err);
+  }
+}
+module.exports = { viewAllOrders, updateShipping };
+
+async function verifyEmailMatch(pool, email, userId) {
+  // Validate payload email with internal email
+  const verifyOriginEmail = await pool.query(
+    "SELECT user_email FROM accounts WHERE user_email = $1 and user_id = $2",
+    [email, userId]
+  );
+  const match = email === verifyOriginEmail.rows[0]?.user_email;
+  return match;
+}

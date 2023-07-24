@@ -73,6 +73,8 @@ export default function AdminAllOrdersPage() {
                   purchases={purchases}
                   shippingCategories={shippingCategories}
                   orderId={purchases.order_id}
+                  userId={user.user_id}
+                  email={user.user_email}
                 />
               </fieldset>
             </div>

@@ -1,14 +1,20 @@
 import { useState } from "react";
+import sendRequest from "../../utilities/send-request";
 
 export default function AdminAllOrders({
   purchases,
   shippingCategories,
   orderId,
+  userId,
+  email,
 }) {
-  const [productStatus, setProductStatus] = useState(purchases.order_status);
-
+  const [updateStatus, setUpdateStatus] = useState(purchases.order_status);
+  const [currentStatus, setCurrentStatus] = useState(
+    getShippingType(purchases.order_status)
+  );
+  console.log("currentStatus", purchases.order_status);
   const handleShippingChange = (event) => {
-    setProductStatus(event.target.value);
+    setUpdateStatus(event.target.value);
   };
 
   function getShippingType(shippingCategoryId) {
@@ -20,10 +26,31 @@ export default function AdminAllOrders({
       : "Shipping type not found";
   }
 
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
     event.preventDefault();
-    console.log("shippingStatus", productStatus);
+    console.log("shippingStatus", updateStatus);
     console.log("OrderId", orderId);
+    console.log("userId", userId);
+    console.log("email", email);
+    try {
+      const updateShipping = async () => {
+        const shippingRes = await sendRequest(
+          `/api/adminSide/updateShipping/`,
+          "PUT",
+          {
+            email: email,
+            user: userId,
+            shippingStatus: updateStatus,
+            orderId: orderId,
+          }
+        );
+        console.log("shippingRes", shippingRes.order_status);
+        setCurrentStatus(getShippingType(shippingRes.order_status));
+      };
+      updateShipping();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -31,8 +58,8 @@ export default function AdminAllOrders({
       {/* {JSON.stringify(purchases)} */}
       {/* {JSON.stringify(shippingCategories)} */}
       <div>
-        <div>Current status: {getShippingType(purchases.order_status)}</div>
-        <select onChange={handleShippingChange} value={productStatus}>
+        <div>Current status: {currentStatus}</div>
+        <select onChange={handleShippingChange} value={updateStatus}>
           {shippingCategories.map((shipping) => (
             <option
               key={shipping.shipping_category_id}
