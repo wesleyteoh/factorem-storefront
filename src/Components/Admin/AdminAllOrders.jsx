@@ -1,5 +1,7 @@
 import { useState } from "react";
 import sendRequest from "../../utilities/send-request";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function AdminAllOrders({
   purchases,
@@ -12,7 +14,18 @@ export default function AdminAllOrders({
   const [currentStatus, setCurrentStatus] = useState(
     getShippingType(purchases.order_status)
   );
-  console.log("currentStatus", purchases.order_status);
+
+  // MUI status messages
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFailed, setOpenFailed] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenFailed(false);
+    setOpenSuccess(false);
+  };
   const handleShippingChange = (event) => {
     setUpdateStatus(event.target.value);
   };
@@ -25,7 +38,7 @@ export default function AdminAllOrders({
       ? shippingObject.shipping_type
       : "Shipping type not found";
   }
-
+  //   console.log("currentStatus", purchases.order_status);
   const handleClick = async (event) => {
     event.preventDefault();
     console.log("shippingStatus", updateStatus);
@@ -48,8 +61,10 @@ export default function AdminAllOrders({
         setCurrentStatus(getShippingType(shippingRes.order_status));
       };
       updateShipping();
+      setOpenSuccess(true);
     } catch (err) {
       console.log(err);
+      setOpenFailed(true);
     }
   };
 
@@ -90,6 +105,20 @@ export default function AdminAllOrders({
           </div>
         ))}
       </div>
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Update success
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openFailed} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Something went wrong. Try refreshing the page.
+        </Alert>
+      </Snackbar>
     </>
   );
 }
