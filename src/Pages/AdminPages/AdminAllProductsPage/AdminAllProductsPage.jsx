@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import sendRequest from "../../../utilities/send-request";
 import Loading from "../../../Components/Loading";
-import MainProducts from "../../../Components/MainProducts/MainProducts";
+// import MainProducts from "../../../Components/MainProducts/MainProducts";
 import { useNavigate } from "react-router";
+import AdminAllProductsComp from "../../../Components/Admin/AdminAllProductsComp";
 
 export default function AdminAllProductsPage({ user }) {
   const [products, setProducts] = useState(null);
@@ -17,7 +18,7 @@ export default function AdminAllProductsPage({ user }) {
     setStatus("loading");
     async function getProducts() {
       const products = await sendRequest("/api/adminSide/all/", "GET");
-      setProducts(products);
+      setProducts(products.sort((a, b) => a.product_id - b.product_id));
       setStatus("success");
     }
     getProducts();
@@ -54,7 +55,8 @@ export default function AdminAllProductsPage({ user }) {
         </form>
         {products?.map((product) => (
           <div key={product.product_id} className="productGrid">
-            <MainProducts
+            <AdminAllProductsComp
+              productActive={product.product_active}
               name={product.product_name}
               price={product.price}
               altprice={product.alt_price}
