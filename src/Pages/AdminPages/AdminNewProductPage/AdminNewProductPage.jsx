@@ -24,6 +24,8 @@ export default function AdminNewProductPage() {
   const [productDimenZ, setProductDimenZ] = useState();
   const [datasheet, setDatasheet] = useState("");
   const [leadtime, setLeadtime] = useState();
+  // For regex
+  const [isValidWebsite, setIsValidWebsite] = useState(true);
 
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailed, setOpenFailed] = useState(false);
@@ -107,6 +109,10 @@ export default function AdminNewProductPage() {
   };
   const handleImageLinkChange = (event) => {
     setImageLink(event.target.value);
+    // Ref for regex format: https://www.makeuseof.com/regular-expressions-validate-url/
+    const websiteRegex =
+      /^(https?:\/\/)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/\S*)?$/;
+    setIsValidWebsite(websiteRegex.test(event.target.value));
   };
   const handleStockChange = (event) => {
     setStockAvail(event.target.value);
@@ -117,7 +123,7 @@ export default function AdminNewProductPage() {
   const handleProductDimenX = (event) => {
     setProductDimenX(event.target.value);
   };
-  console.log(selectedMaterialCategory);
+
   const disabled = selectedMaterialCategory === null;
 
   if (status === "loading") {
@@ -169,6 +175,9 @@ export default function AdminNewProductPage() {
               onChange={handleImageLinkChange}
             ></input>
           </label>
+          {!isValidWebsite && (
+            <p style={{ color: "red" }}>Invalid website URL</p>
+          )}
           <label>
             Stock Available:
             <input
