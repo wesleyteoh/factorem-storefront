@@ -76,4 +76,55 @@ async function getSearchedProduct(req, res) {
     }
   }
 }
-module.exports = { getAllProducts, getOneProduct, getSearchedProduct };
+
+async function getMaterialCategory(req, res) {
+  try {
+    const { rows } = await pool.query(`SELECT * FROM material_category
+    JOIN main_category ON material_category.main_category_id = main_category.main_category_id;`);
+    res.json(consolidateArrayByMainCategory(rows));
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+// async function getMaterials(req,res){
+//   try{}
+//   catch(err){res.status(400).json(err)}
+// }
+module.exports = {
+  getAllProducts,
+  getOneProduct,
+  getSearchedProduct,
+  getMaterialCategory,
+};
+
+// Functions
+function consolidateArrayByMainCategory(array) {
+  const consolidatedArray = [];
+
+  array.forEach((item) => {
+    const { main_category_id, main_category_name } = item;
+    const existingCategory = consolidatedArray.find(
+      (category) => category.main_category_id === main_category_id
+    );
+
+    if (existingCategory) {
+      existingCategory.material_categories.push({
+        material_category_id: item.material_category_id,
+        material_category_name: item.material_category_name,
+      });
+    } else {
+      consolidatedArray.push({
+        main_category_id,
+        main_category_name,
+        material_categories: [
+          {
+            material_category_id: item.material_category_id,
+            material_category_name: item.material_category_name,
+          },
+        ],
+      });
+    }
+  });
+
+  return consolidatedArray;
+}

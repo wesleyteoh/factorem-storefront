@@ -1,7 +1,16 @@
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Loading from "../../../Components/Loading";
+import sendRequest from "../../../utilities/send-request";
 export default function AdminNewProductPage() {
+  const [status, setStatus] = useState("idle");
+  // For populating dropdown
+  const [materials, setMaterials] = useState([]);
+  const [selectedMainCategory, setSelectedMainCategory] = useState(null);
+  const [selectedMaterialCategory, setSelectedMaterialCategory] =
+    useState(null);
+  // For entry fields
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState();
   const [altPrice, setAltPrice] = useState();
@@ -19,6 +28,40 @@ export default function AdminNewProductPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailed, setOpenFailed] = useState(false);
 
+  async function getMaterialCategory() {
+    try {
+      const materials = await sendRequest(`/products/materials`, "GET");
+      setMaterials(materials);
+      setStatus("success");
+    } catch (err) {
+      console.log(err);
+      setStatus("error");
+    }
+  }
+  const handleMainCategoryChange = (event) => {
+    const selectedMainCategoryName = event.target.value;
+    const selectedMainCategory = materials.find(
+      (mainCategory) =>
+        mainCategory.main_category_name === selectedMainCategoryName
+    );
+    setSelectedMainCategory(selectedMainCategory);
+    setSelectedMaterialCategory(null);
+  };
+
+  const handleMaterialCategoryChange = (event) => {
+    const selectedMaterialCategoryID = event.target.value;
+    const selectedMaterialCategory =
+      selectedMainCategory.material_categories.find(
+        (materialCategory) =>
+          materialCategory.material_category_id ===
+          parseInt(selectedMaterialCategoryID, 10)
+      );
+    setSelectedMaterialCategory(selectedMaterialCategory);
+  };
+  useEffect(() => {
+    getMaterialCategory();
+  }, []);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -28,6 +71,11 @@ export default function AdminNewProductPage() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("selectedMainCategory", selectedMainCategory.main_category_id);
+    console.log(
+      "selectedMaterialCategory",
+      selectedMaterialCategory.material_category_id
+    );
     // const detailPayload = {
     //   payloadAccount: account,
     //   payloadContact: profileContact,
@@ -66,18 +114,23 @@ export default function AdminNewProductPage() {
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
-  const handleProductActive = (event) => {
-    setProductActive(event.target.value);
-  };
   const handleProductDimenX = (event) => {
     setProductDimenX(event.target.value);
   };
+  console.log(selectedMaterialCategory);
+  const disabled = selectedMaterialCategory === null;
 
+  if (status === "loading") {
+    return <Loading />;
+  }
+
+  if (status === "error") {
+    return <div>Error fetching data. Please try again later.</div>;
+  }
   // end of onchanges
   return (
     <>
       <div>New Product Page</div>
-
       <fieldset className="profile-container">
         <form onSubmit={handleSubmit}>
           <label>
@@ -143,7 +196,62 @@ export default function AdminNewProductPage() {
               onChange={handleProductDimenX}
             ></input>
           </label>
-          <button className="user-submit-button">Submit</button>
+          {/* Start of material dropdown */}
+          <div>
+            <label htmlFor="mainCategory">Select Main Category:</label>
+            <select
+              id="mainCategory"
+              value={
+                selectedMainCategory
+                  ? selectedMainCategory.main_category_name
+                  : ""
+              }
+              onChange={handleMainCategoryChange}
+            >
+              <option value="">Select a Main Category</option>
+              {materials.map((mainCategory) => (
+                <option
+                  key={mainCategory.main_category_id}
+                  value={mainCategory.main_category_name}
+                >
+                  {mainCategory.main_category_name}
+                </option>
+              ))}
+            </select>
+
+            {selectedMainCategory && (
+              <div>
+                <label htmlFor="materialCategory">
+                  Select Material Category:
+                </label>
+                <select
+                  id="materialCategory"
+                  value={
+                    selectedMaterialCategory
+                      ? selectedMaterialCategory.material_category_id
+                      : ""
+                  }
+                  onChange={handleMaterialCategoryChange}
+                >
+                  <option value="">Select a Material Category</option>
+                  {selectedMainCategory.material_categories.map(
+                    (materialCategory) => (
+                      <option
+                        key={materialCategory.material_category_id}
+                        value={materialCategory.material_category_id}
+                      >
+                        {materialCategory.material_category_name}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+            )}
+          </div>
+          {/* End of material dropdown */}
+          <button disabled={disabled} className="user-submit-button">
+            Submit
+          </button>
         </form>
       </fieldset>
       <Snackbar
