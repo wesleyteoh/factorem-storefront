@@ -120,14 +120,31 @@ async function updateShipping(req, res) {
     res.status(401).json(err);
   }
 }
-module.exports = { viewAllOrders, updateShipping };
 
+async function getAdminAllProducts(req, res) {
+  try {
+    // Execute the raw SQL query
+    const { rows } = await pool.query(`SELECT * FROM products
+    JOIN material_category ON products.material = material_category.material_category_id 
+    JOIN main_category ON products.category_id = main_category.main_category_id
+          `);
+    // console.log("rows", rows);
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error executing query:", error);
+    res.status(500).json("could not get product");
+  }
+}
+module.exports = { viewAllOrders, updateShipping, getAdminAllProducts };
+
+// Functions
 async function verifyEmailMatch(pool, email, userId) {
   // Validate payload email with internal email
   const verifyOriginEmail = await pool.query(
     "SELECT user_email FROM accounts WHERE user_email = $1 and user_id = $2",
     [email, userId]
   );
+
   const match = email === verifyOriginEmail.rows[0]?.user_email;
   return match;
 }

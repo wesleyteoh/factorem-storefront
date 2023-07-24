@@ -12,6 +12,9 @@ export default function AdminHomeNavBar() {
             <li>
               <Link to="/admin/orders">Orders</Link>
             </li>
+            <li>
+              <Link to="/">Add new product</Link>
+            </li>
             {/* <li>
               <Link to="/users/history">Past Orders</Link>
             </li> */}

@@ -30,28 +30,12 @@ export default function App() {
   // }, []);
   return (
     <main className="App">
-      {/* {user === "buyer" ? (
-        <>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-        </>
-      ) :  */}
-      {/* user === "admin" ? (
-        <>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-        </>
-      ) : ( */}
       {user?.user_type === "admin" ? (
         <>
           <AdminNavbar user={user} setUser={setUser} />
           <AdminHomeNavBar />
           <Routes>
-            <Route path="/" element={<HomePage user={user} />} />
+            <Route path="/" element={<AdminAllProductsPage user={user} />} />
             <Route
               path="/admin/orders"
               element={<AdminAllOrdersPage user={user} />}
