@@ -22,7 +22,10 @@ export default function ProductPage() {
   useEffect(() => {
     setStatus("loading");
     async function getProducts() {
-      const products = await sendRequest(`/products/one/${productId}`, "GET");
+      const products = await sendRequest(
+        `/api/products/one/${productId}`,
+        "GET"
+      );
       setProducts(products);
       // console.log(products[0].image_link);
       setIsValidWebsite(websiteRegex.test(products[0].datasheet));

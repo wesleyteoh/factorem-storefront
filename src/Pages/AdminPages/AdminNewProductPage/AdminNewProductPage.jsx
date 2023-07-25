@@ -34,7 +34,7 @@ export default function AdminNewProductPage() {
 
   async function getMaterialCategory() {
     try {
-      const materials = await sendRequest(`/products/materials`, "GET");
+      const materials = await sendRequest(`/api/products/materials`, "GET");
       setMaterials(materials);
       setStatus("success");
     } catch (err) {

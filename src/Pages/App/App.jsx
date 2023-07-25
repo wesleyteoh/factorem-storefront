@@ -85,7 +85,7 @@ export default function App() {
               element={<ConfirmationPage user={user} />}
             />
             <Route
-              path="/products/search/:searchTerm"
+              path="/product/search/:searchTerm"
               element={<SearchPage />}
             />
             <Route path="/products/:productId" element={<ProductPage />} />

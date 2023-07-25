@@ -17,7 +17,7 @@ export default function HomePage({ user }) {
     setStatus("loading");
     async function getProducts() {
       try {
-        const products = await sendRequest("/products/all", "GET");
+        const products = await sendRequest("/api/products/all", "GET");
         // To sort latest products first
         setProducts(products.sort((a, b) => b.product_id - a.product_id));
         setStatus("success");
