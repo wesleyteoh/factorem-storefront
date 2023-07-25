@@ -25,7 +25,7 @@ export default function AdminNewProductPage() {
   const [productDimenY, setProductDimenY] = useState(null);
   const [productDimenZ, setProductDimenZ] = useState(null);
   const [datasheet, setDatasheet] = useState("");
-  const [leadtime, setLeadtime] = useState("");
+  const [leadtime, setLeadtime] = useState(null);
   // For regex
   const [isValidWebsite, setIsValidWebsite] = useState(true);
 
@@ -123,7 +123,7 @@ export default function AdminNewProductPage() {
         setProductName("");
         setPrice(null);
         setAltPrice(null);
-        setImageLink(null);
+        setImageLink("");
         setStockAvail(null);
         setDescription("");
         setDatasheet("");
@@ -179,7 +179,19 @@ export default function AdminNewProductPage() {
     setDatasheet(event.target.value);
   };
 
-  const disabled = selectedMaterialCategory === null;
+  const disabled =
+    selectedMaterialCategory === null ||
+    productName === "" ||
+    price === null ||
+    altPrice === null ||
+    imageLink === "" ||
+    stockAvail === null ||
+    description === "" ||
+    datasheet === "" ||
+    productDimenX === null ||
+    productDimenY === null ||
+    productDimenZ === null ||
+    leadtime === null;
 
   if (status === "loading") {
     return <Loading />;
@@ -192,7 +204,7 @@ export default function AdminNewProductPage() {
   return (
     <>
       <div>New Product Page</div>
-      <div>{JSON.stringify(user)}</div>
+      {/* <div>{JSON.stringify(user)}</div> */}
       <fieldset className="profile-container">
         <form onSubmit={handleSubmit}>
           <label>
@@ -293,7 +305,7 @@ export default function AdminNewProductPage() {
             <input
               className="profile-box"
               type="number"
-              value={leadtime}
+              value={leadtime !== null ? leadtime : ""}
               onChange={handleLeadtime}
             ></input>
           </label>
