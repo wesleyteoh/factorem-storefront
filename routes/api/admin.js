@@ -6,5 +6,6 @@ const adminCtrl = require("../../controllers/api/adminController");
 router.post("/view", adminCtrl.viewAllOrders);
 router.get("/all", adminCtrl.getAdminAllProducts);
 router.put("/updateShipping", adminCtrl.updateShipping);
+router.post("/addNewProduct", adminCtrl.adminAddNewProduct);
 
 module.exports = router;

@@ -37,8 +37,8 @@ export default function HomePage({ user }) {
     return (
       <>
         <h1>Main Page</h1>
-        User:{JSON.stringify(user)}
-        Products: {JSON.stringify(products)}
+        {/* User:{JSON.stringify(user)}
+        Products: {JSON.stringify(products)} */}
         <form onSubmit={handleSubmit}>
           <label>
             <input

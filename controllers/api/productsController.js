@@ -86,10 +86,7 @@ async function getMaterialCategory(req, res) {
     res.status(400).json(err);
   }
 }
-// async function getMaterials(req,res){
-//   try{}
-//   catch(err){res.status(400).json(err)}
-// }
+
 module.exports = {
   getAllProducts,
   getOneProduct,

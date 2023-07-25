@@ -135,10 +135,56 @@ async function getAdminAllProducts(req, res) {
     res.status(500).json("could not get product");
   }
 }
-module.exports = { viewAllOrders, updateShipping, getAdminAllProducts };
+
+async function adminAddNewProduct(req, res) {
+  const {
+    email,
+    userId,
+    product_name,
+    price,
+    alt_price,
+    image_link,
+    stockAvail,
+    description,
+    mainCategory,
+    materialName,
+    product_dimen_x,
+    product_dimen_y,
+    product_dimen_z,
+    datasheet,
+    leadtime,
+  } = req.body;
+  try {
+    const isEmailMatch = await verifyEmailMatch(pool, email, userId);
+    console.log(isEmailMatch);
+    if (isEmailMatch) {
+      console.log("verified by db");
+      // res.json("works");
+      try {
+        await pool.query(`INSERT INTO products(product_name,price,alt_price,image_link,stock_avail,description,product_active,category_id,material,product_dimen_x,product_dimen_y,product_dimen_z,datasheet,leadtime)
+        VALUES ('${product_name}',${price},${alt_price},'${image_link}',${stockAvail},'${description}',true,(SELECT main_category_id FROM main_category WHERE main_category_name = '${mainCategory}'),(SELECT material_category_id FROM material_category WHERE material_category_name = '${materialName}'),${product_dimen_x},${product_dimen_y},${product_dimen_z},'${datasheet}',${leadtime})`);
+        console.log("product added");
+        res.json("product added");
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    } else res.status(401).json("unauthorised");
+  } catch (err) {
+    res.status(403).json(err);
+  }
+}
+module.exports = {
+  viewAllOrders,
+  updateShipping,
+  getAdminAllProducts,
+  adminAddNewProduct,
+};
 
 // Functions
 async function verifyEmailMatch(pool, email, userId) {
+  if (userId === undefined || email === undefined) {
+    return false;
+  }
   // Validate payload email with internal email
   const verifyOriginEmail = await pool.query(
     "SELECT user_email FROM accounts WHERE user_email = $1 and user_id = $2",

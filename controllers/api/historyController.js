@@ -15,7 +15,7 @@ async function getHistory(req, res) {
     // console.log(getHistory);
     // res.json(getHistory.rows);
 
-    // reduce fn
+    // reduce fn. Can use PSQL query group by instead
     const consolidatedData = getHistory.rows.reduce((result, item) => {
       const existingOrder = result.find(
         (order) => order.order_id === item.order_id

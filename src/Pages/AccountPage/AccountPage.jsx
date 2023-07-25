@@ -187,6 +187,8 @@ export default function AccountPage({ user }) {
             <input
               className="profile-box"
               type="number"
+              // type="text"
+              // inputMode="numeric"
               value={profileUserPostalCode}
               onChange={handlePostalChange}
             ></input>

@@ -91,6 +91,7 @@ export default function SearchPage() {
           ? "No items found"
           : searchedProducts?.map((product) => (
               <div key={product.product_id} className="productGrid">
+                {/* <div>{JSON.stringify(product)}</div> */}
                 <MainProducts
                   name={product.product_name}
                   price={product.price}
@@ -98,6 +99,7 @@ export default function SearchPage() {
                   description={product.description}
                   imageUrl={product.image_link}
                   stock={product.stock_avail}
+                  material_category={product.main_category_name}
                   material={product.material_category_name}
                   id={product.product_id}
                 />

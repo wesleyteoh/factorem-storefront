@@ -37,8 +37,8 @@ export default function AdminAllProductsPage({ user }) {
     return (
       <>
         <h1>Admin Product Page</h1>
-        User:{JSON.stringify(user)}
-        Products: {JSON.stringify(products)}
+        {/* User:{JSON.stringify(user)}
+        Products: {JSON.stringify(products)} */}
         <form onSubmit={handleSubmit}>
           <label>
             <input

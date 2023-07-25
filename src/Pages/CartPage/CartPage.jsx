@@ -111,7 +111,7 @@ export default function CartPage() {
     <>
       My cart
       {/* <div>{JSON.stringify(user)}</div> */}
-      <div>{JSON.stringify(cartContent)}</div>
+      {/* <div>{JSON.stringify(cartContent)}</div> */}
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
           {/* {JSON.stringify(cart)} */}
