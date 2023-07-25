@@ -14,12 +14,18 @@ export default function ProductPage() {
   const { productId } = useParams();
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [isValidWebsite, setIsValidWebsite] = useState(true);
+
+  const websiteRegex =
+    /^(https?:\/\/)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/\S*)?$/;
 
   useEffect(() => {
     setStatus("loading");
     async function getProducts() {
       const products = await sendRequest(`/products/one/${productId}`, "GET");
       setProducts(products);
+      // console.log(products[0].image_link);
+      setIsValidWebsite(websiteRegex.test(products[0].datasheet));
       setStatus("success");
     }
     getProducts();
@@ -89,16 +95,21 @@ export default function ProductPage() {
         ) : (
           `Discounted price: $${products[0].alt_price}`
         )}
-        <div>
-          Datasheet:{" "}
-          <Link
-            to={products[0].datasheet}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Datasheet
-          </Link>
-        </div>
+        {isValidWebsite ? (
+          <div>
+            Datasheet:{" "}
+            <Link
+              to={products[0].datasheet}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Datasheet
+            </Link>
+          </div>
+        ) : (
+          <></>
+        )}
+
         {products[0].product_active ? <></> : <div>Product Discontinued</div>}
         <div>
           <button disabled={disabled} onClick={handleAddToCart}>
