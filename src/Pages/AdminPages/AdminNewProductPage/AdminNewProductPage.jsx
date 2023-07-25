@@ -14,18 +14,18 @@ export default function AdminNewProductPage() {
     useState(null);
   // For entry fields
   const [productName, setProductName] = useState("");
-  const [price, setPrice] = useState();
-  const [altPrice, setAltPrice] = useState();
+  const [price, setPrice] = useState(null);
+  const [altPrice, setAltPrice] = useState(null);
   const [imageLink, setImageLink] = useState("");
-  const [stockAvail, setStockAvail] = useState("");
+  const [stockAvail, setStockAvail] = useState(null);
   const [description, setDescription] = useState("");
-  const [productActive, setProductActive] = useState(true);
+  // const [productActive, setProductActive] = useState(true);
   const [material, setMaterial] = useState("");
-  const [productDimenX, setProductDimenX] = useState();
-  const [productDimenY, setProductDimenY] = useState();
-  const [productDimenZ, setProductDimenZ] = useState();
+  const [productDimenX, setProductDimenX] = useState(null);
+  const [productDimenY, setProductDimenY] = useState(null);
+  const [productDimenZ, setProductDimenZ] = useState(null);
   const [datasheet, setDatasheet] = useState("");
-  const [leadtime, setLeadtime] = useState();
+  const [leadtime, setLeadtime] = useState("");
   // For regex
   const [isValidWebsite, setIsValidWebsite] = useState(true);
 
@@ -77,29 +77,67 @@ export default function AdminNewProductPage() {
     event.preventDefault();
     console.log("userId", user.user_id);
     console.log("user_email", user.user_email);
-    // console.log("selectedMainCategory", selectedMainCategory);
+    console.log("product_name", productName);
+    console.log("price", price);
+    console.log("altPrice", altPrice);
+    console.log("imagelink", imageLink);
+    console.log("stock", stockAvail);
+    console.log("description", description);
     console.log("selectedMainCategory", selectedMainCategory.main_category_id);
     console.log(
       "selectedMaterialCategory",
       selectedMaterialCategory.material_category_id
     );
-    // const detailPayload = {
-    //   payloadAccount: account,
-    //   payloadContact: profileContact,
-    //   payloadAddress1: profileUserAddressLine1,
-    //   payloadAddress2: profileUserAddressLine2,
-    //   payloadCity: profileUserCity,
-    //   payloadCountry: profileUserCountry,
-    //   payloadPostal: profileUserPostalCode,
-    // };
-    // console.log(detailPayload);
-    try {
-      // await updateUserDetails(detailPayload);
-      // setOpenSuccess(true);
-    } catch (err) {
-      // console.log(err);
-      // setOpenFailed(true);
-    }
+    console.log("product_dimen_x", productDimenX);
+    console.log("product_dimen_y", productDimenY);
+    console.log("product_dimen_z", productDimenZ);
+    console.log("datasheet", datasheet);
+    console.log("leadtime", leadtime);
+
+    // try {
+    const getCart = async () => {
+      try {
+        const addProductRes = await sendRequest(
+          `/api/adminSide/addNewProduct`,
+          "POST",
+          {
+            email: user.user_email,
+            userId: parseInt(user.user_id),
+            product_name: productName,
+            price: price,
+            alt_price: altPrice,
+            image_link: imageLink,
+            stockAvail: stockAvail,
+            description: description,
+            mainCategoryId: selectedMainCategory.main_category_id,
+            materialNameId: selectedMaterialCategory.material_category_id,
+            product_dimen_x: productDimenX,
+            product_dimen_y: productDimenY,
+            product_dimen_z: productDimenZ,
+            datasheet: datasheet,
+            leadtime: leadtime,
+          }
+        );
+        console.log(addProductRes);
+        setOpenSuccess(true);
+        setProductName("");
+        setPrice(null);
+        setAltPrice(null);
+        setImageLink(null);
+        setStockAvail(null);
+        setDescription("");
+        setDatasheet("");
+        setProductDimenX(null);
+        setProductDimenY(null);
+        setProductDimenZ(null);
+        setLeadtime(null);
+        // getMaterialCategory();
+      } catch (err) {
+        console.log(err);
+        setOpenFailed(true);
+      }
+    };
+    getCart();
   };
 
   // Start of onchanges
@@ -171,7 +209,7 @@ export default function AdminNewProductPage() {
             <input
               className="profile-box"
               type="number"
-              value={price}
+              value={price !== null ? price : ""}
               onChange={handlePriceChange}
             ></input>
           </label>
@@ -180,7 +218,7 @@ export default function AdminNewProductPage() {
             <input
               className="profile-box"
               type="number"
-              value={altPrice}
+              value={altPrice !== null ? altPrice : ""}
               onChange={handleAltPriceChange}
             ></input>
           </label>
@@ -201,7 +239,7 @@ export default function AdminNewProductPage() {
             <input
               className="profile-box"
               type="number"
-              value={stockAvail}
+              value={stockAvail !== null ? stockAvail : ""}
               onChange={handleStockChange}
             ></input>
           </label>
@@ -228,7 +266,7 @@ export default function AdminNewProductPage() {
             <input
               className="profile-box"
               type="number"
-              value={productDimenX}
+              value={productDimenX !== null ? productDimenX : ""}
               onChange={handleProductDimenX}
             ></input>
           </label>
@@ -237,7 +275,7 @@ export default function AdminNewProductPage() {
             <input
               className="profile-box"
               type="number"
-              value={productDimenY}
+              value={productDimenY !== null ? productDimenY : ""}
               onChange={handleProductDimenY}
             ></input>
           </label>
@@ -246,7 +284,7 @@ export default function AdminNewProductPage() {
             <input
               className="profile-box"
               type="number"
-              value={productDimenZ}
+              value={productDimenZ !== null ? productDimenZ : ""}
               onChange={handleProductDimenZ}
             ></input>
           </label>
@@ -323,12 +361,12 @@ export default function AdminNewProductPage() {
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Change successful
+          Product add successful
         </Alert>
       </Snackbar>
       <Snackbar open={openFailed} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          Change failed
+          Product add failed
         </Alert>
       </Snackbar>
     </>

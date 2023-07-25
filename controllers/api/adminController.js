@@ -155,6 +155,8 @@ async function adminAddNewProduct(req, res) {
     leadtime,
   } = req.body;
   try {
+    console.log(email);
+    console.log(userId);
     const isEmailMatch = await verifyEmailMatch(pool, email, userId);
     console.log(isEmailMatch);
     if (isEmailMatch) {
