@@ -3,7 +3,9 @@ import Alert from "@mui/material/Alert";
 import { useEffect, useState } from "react";
 import Loading from "../../../Components/Loading";
 import sendRequest from "../../../utilities/send-request";
+import { getUser } from "../../../utilities/users-service";
 export default function AdminNewProductPage() {
+  const [user, setUser] = useState(getUser());
   const [status, setStatus] = useState("idle");
   // For populating dropdown
   const [materials, setMaterials] = useState([]);
@@ -73,6 +75,9 @@ export default function AdminNewProductPage() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("userId", user.user_id);
+    console.log("user_email", user.user_email);
+    // console.log("selectedMainCategory", selectedMainCategory);
     console.log("selectedMainCategory", selectedMainCategory.main_category_id);
     console.log(
       "selectedMaterialCategory",
@@ -123,6 +128,18 @@ export default function AdminNewProductPage() {
   const handleProductDimenX = (event) => {
     setProductDimenX(event.target.value);
   };
+  const handleProductDimenY = (event) => {
+    setProductDimenY(event.target.value);
+  };
+  const handleProductDimenZ = (event) => {
+    setProductDimenZ(event.target.value);
+  };
+  const handleLeadtime = (event) => {
+    setLeadtime(event.target.value);
+  };
+  const handleDatasheet = (event) => {
+    setDatasheet(event.target.value);
+  };
 
   const disabled = selectedMaterialCategory === null;
 
@@ -137,6 +154,7 @@ export default function AdminNewProductPage() {
   return (
     <>
       <div>New Product Page</div>
+      <div>{JSON.stringify(user)}</div>
       <fieldset className="profile-container">
         <form onSubmit={handleSubmit}>
           <label>
@@ -197,12 +215,48 @@ export default function AdminNewProductPage() {
             ></input>
           </label>
           <label>
+            Datasheet:
+            <input
+              className="profile-box"
+              type="text"
+              value={datasheet}
+              onChange={handleDatasheet}
+            ></input>
+          </label>
+          <label>
             Product dimension X:
             <input
               className="profile-box"
               type="number"
               value={productDimenX}
               onChange={handleProductDimenX}
+            ></input>
+          </label>
+          <label>
+            Product dimension Y:
+            <input
+              className="profile-box"
+              type="number"
+              value={productDimenY}
+              onChange={handleProductDimenY}
+            ></input>
+          </label>
+          <label>
+            Product dimension Z:
+            <input
+              className="profile-box"
+              type="number"
+              value={productDimenZ}
+              onChange={handleProductDimenZ}
+            ></input>
+          </label>
+          <label>
+            Lead time:
+            <input
+              className="profile-box"
+              type="number"
+              value={leadtime}
+              onChange={handleLeadtime}
             ></input>
           </label>
           {/* Start of material dropdown */}

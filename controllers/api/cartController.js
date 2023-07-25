@@ -283,6 +283,9 @@ module.exports = {
 
 // Functions
 async function verifyEmailMatch(pool, email, userId) {
+  if (userId === undefined || email === undefined) {
+    return false;
+  }
   // Validate payload email with internal email
   const verifyOriginEmail = await pool.query(
     "SELECT user_email FROM accounts WHERE user_email = $1 and user_id = $2",

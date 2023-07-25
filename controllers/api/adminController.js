@@ -146,8 +146,8 @@ async function adminAddNewProduct(req, res) {
     image_link,
     stockAvail,
     description,
-    mainCategory,
-    materialName,
+    mainCategoryId,
+    materialNameId,
     product_dimen_x,
     product_dimen_y,
     product_dimen_z,
@@ -162,7 +162,7 @@ async function adminAddNewProduct(req, res) {
       // res.json("works");
       try {
         await pool.query(`INSERT INTO products(product_name,price,alt_price,image_link,stock_avail,description,product_active,category_id,material,product_dimen_x,product_dimen_y,product_dimen_z,datasheet,leadtime)
-        VALUES ('${product_name}',${price},${alt_price},'${image_link}',${stockAvail},'${description}',true,(SELECT main_category_id FROM main_category WHERE main_category_name = '${mainCategory}'),(SELECT material_category_id FROM material_category WHERE material_category_name = '${materialName}'),${product_dimen_x},${product_dimen_y},${product_dimen_z},'${datasheet}',${leadtime})`);
+        VALUES ('${product_name}',${price},${alt_price},'${image_link}',${stockAvail},'${description}',true,'${mainCategoryId}',${materialNameId},${product_dimen_x},${product_dimen_y},${product_dimen_z},'${datasheet}',${leadtime})`);
         console.log("product added");
         res.json("product added");
       } catch (err) {
