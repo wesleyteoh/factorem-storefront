@@ -34,6 +34,7 @@ export default function AdminAllOrders({
     const shippingObject = shippingCategories.find(
       (item) => item.shipping_category_id === shippingCategoryId
     );
+    // return shippingObject.shipping_type;
     return shippingObject
       ? shippingObject.shipping_type
       : "Shipping type not found";
