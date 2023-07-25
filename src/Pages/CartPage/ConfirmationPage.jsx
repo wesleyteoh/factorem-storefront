@@ -127,9 +127,9 @@ export default function ConfirmationPage() {
   }
   return (
     <>
-      Cart Page
-      <>{JSON.stringify(user)}</>
-      <div>{JSON.stringify(cartContent)}</div>
+      Confirmation Page
+      {/* <>{JSON.stringify(user)}</>
+      <div>{JSON.stringify(cartContent)}</div> */}
       {cartContent?.map((cart) => (
         <div key={cart.order_item_id}>
           <ConfirmationItems
