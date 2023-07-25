@@ -15,7 +15,7 @@ app.use(require("./config/checkToken"));
 
 // app.use("/api", require("./routes/api/music"));
 app.use("/api/users", require("./routes/api/users"));
-app.use("/products", require("./routes/api/products"));
+app.use("/api/products", require("./routes/api/products"));
 app.use("/api/history", require("./routes/api/history"));
 app.use("/api/cart", require("./routes/api/cart"));
 app.use("/api/adminSide", require("./routes/api/admin"));

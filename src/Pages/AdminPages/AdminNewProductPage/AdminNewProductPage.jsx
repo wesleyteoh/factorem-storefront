@@ -281,6 +281,7 @@ export default function AdminNewProductPage() {
               value={productDimenX !== null ? productDimenX : ""}
               onChange={handleProductDimenX}
             ></input>
+            cm
           </label>
           <label>
             Product dimension Y:
@@ -290,6 +291,7 @@ export default function AdminNewProductPage() {
               value={productDimenY !== null ? productDimenY : ""}
               onChange={handleProductDimenY}
             ></input>
+            cm
           </label>
           <label>
             Product dimension Z:
@@ -299,6 +301,7 @@ export default function AdminNewProductPage() {
               value={productDimenZ !== null ? productDimenZ : ""}
               onChange={handleProductDimenZ}
             ></input>
+            cm
           </label>
           <label>
             Lead time:
@@ -308,6 +311,7 @@ export default function AdminNewProductPage() {
               value={leadtime !== null ? leadtime : ""}
               onChange={handleLeadtime}
             ></input>
+            days
           </label>
           {/* Start of material dropdown */}
           <div>

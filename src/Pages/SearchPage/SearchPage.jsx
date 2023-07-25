@@ -17,7 +17,7 @@ export default function SearchPage() {
     async function getProducts() {
       try {
         const products = await sendRequest(
-          `/products/search/${searchTerm}`,
+          `/api/products/search/${searchTerm}`,
           "GET"
         );
         setSearchedProducts(products);
