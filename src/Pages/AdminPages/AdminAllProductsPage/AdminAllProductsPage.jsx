@@ -18,7 +18,7 @@ export default function AdminAllProductsPage({ user }) {
     setStatus("loading");
     async function getProducts() {
       const products = await sendRequest("/api/adminSide/all/", "GET");
-      setProducts(products.sort((a, b) => a.product_id - b.product_id));
+      setProducts(products.sort((a, b) => b.product_id - a.product_id));
       setStatus("success");
     }
     getProducts();

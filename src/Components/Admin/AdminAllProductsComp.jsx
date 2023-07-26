@@ -29,11 +29,11 @@ export default function AdminAllProductsComp({
           alt="imagename"
         />
         <div className="flex flex-wrap mt-3">
-          {/* <Link to={`/products/${id}`} className="product-name">
+          <Link to={`/admin/products/${id}`} className="product-name">
             {name}
-          </Link> */}
+          </Link>
 
-          <div className="product-name"> {name}</div>
+          {/* <div className="product-name"> {name}</div> */}
           <div className="product-id"> Id: {id}</div>
           <div className="product-price"> Price ${productPrice}</div>
           <div className="product-altPrice">

@@ -4,7 +4,7 @@ export default function CartUnauthorised() {
   return (
     <>
       Unauthorised
-      <div>Do not open a new tab. Click here to return to home page</div>
+      <div>Check that you are logged in. Click here to return to home page</div>
       <Link to={"/"}>Home Page</Link>
     </>
   );

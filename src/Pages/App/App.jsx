@@ -20,6 +20,7 @@ import Error404Page from "../Error404Page/Error404Page";
 import AdminNavbar from "../../Components/AdminNavBar";
 import AdminHomeNavBar from "../../Components/AdminHomeNavBar";
 import AdminNewProductPage from "../AdminPages/AdminNewProductPage/AdminNewProductPage";
+import AdminProductPage from "../AdminPages/AdminProductPage";
 
 export default function App() {
   // const [user, setUser] = useState("");
@@ -41,13 +42,13 @@ export default function App() {
               path="/admin/orders"
               element={<AdminAllOrdersPage user={user} />}
             />
-            {/* <Route
-              path="/admin/products"
-              element={<AdminAllProductsPage user={user} />}
-            /> */}
             <Route
               path="/admin/product/new"
               element={<AdminNewProductPage user={user} />}
+            />
+            <Route
+              path="/admin/products/:productId"
+              element={<AdminProductPage user={user} />}
             />
             <Route
               path="/users/profile"
