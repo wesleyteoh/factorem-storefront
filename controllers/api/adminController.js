@@ -198,13 +198,37 @@ async function getAdminOneProduct(req, res) {
 }
 
 async function updateOneProduct(req, res) {
-  const { userId, email } = req.body;
+  const {
+    userId,
+    email,
+    productName,
+    description,
+    leadtime,
+    productDimenX,
+    productDimenY,
+    productDimenZ,
+    price,
+    altPrice,
+    dataSheet,
+    imageLink,
+    isActive,
+  } = req.body;
   const productId = req.params.productId;
+  // console.log(productId);
   try {
     const isEmailMatch = await verifyEmailMatch(pool, email, userId);
     console.log(isEmailMatch);
     if (isEmailMatch) {
-      res.json("confirmed");
+      await pool.query(`UPDATE products
+      SET product_name='${productName}',price=${price},alt_price=${altPrice},description='${description}',product_dimen_x=${productDimenX},product_dimen_y=${productDimenY},product_dimen_z=${productDimenZ},
+      leadtime=${leadtime},
+      image_link='${imageLink}',
+      datasheet='${dataSheet}',
+      product_active=${isActive}
+      WHERE product_id = ${productId}`);
+      res.json("update success");
+    } else {
+      res.status(500).json("update failed");
     }
   } catch (err) {
     res.status(400).json(err);
