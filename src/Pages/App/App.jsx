@@ -21,6 +21,7 @@ import AdminNavbar from "../../Components/AdminNavBar";
 import AdminHomeNavBar from "../../Components/AdminHomeNavBar";
 import AdminNewProductPage from "../AdminPages/AdminNewProductPage/AdminNewProductPage";
 import AdminProductPage from "../AdminPages/AdminProductPage";
+import AdminSearchPage from "../AdminPages/AdminSearch";
 
 export default function App() {
   // const [user, setUser] = useState("");
@@ -41,6 +42,10 @@ export default function App() {
             <Route
               path="/admin/orders"
               element={<AdminAllOrdersPage user={user} />}
+            />
+            <Route
+              path="/admin/search/:searchTerm"
+              element={<AdminSearchPage />}
             />
             <Route
               path="/admin/product/new"

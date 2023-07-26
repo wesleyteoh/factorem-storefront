@@ -28,7 +28,7 @@ export default function AdminAllProductsPage({ user }) {
     if (!searchTermState) {
       return;
     }
-    navigate(`/products/search/${searchTermState}`);
+    navigate(`/admin/search/${searchTermState}`);
   };
 
   if (status === "loading") {
