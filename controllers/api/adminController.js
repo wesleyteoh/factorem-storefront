@@ -234,6 +234,43 @@ async function updateOneProduct(req, res) {
     res.status(400).json(err);
   }
 }
+async function getSearchedProduct(req, res) {
+  const searchTerm = req.params.searchTerm;
+  console.log(searchTerm);
+  if (searchTerm.startsWith("id:")) {
+    console.log("search by id");
+    const extractedNumber = searchTerm.replace("id:", "");
+    console.log(parseInt(extractedNumber));
+
+    if (!isNaN(extractedNumber)) {
+      try {
+        const { rows } = await pool.query(`SELECT *
+        FROM products
+        JOIN material_category ON products.material = material_category.material_category_id 
+        JOIN main_category ON products.category_id = main_category.main_category_id
+        WHERE product_id = ${extractedNumber}`);
+        res.status(200).json(rows);
+      } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(200).json("");
+    }
+  } else {
+    try {
+      const { rows } = await pool.query(`SELECT *
+      FROM products
+      JOIN material_category ON products.material = material_category.material_category_id
+      JOIN main_category ON products.category_id = main_category.main_category_id
+      WHERE (product_name ILIKE '%${searchTerm}%' OR products.description ILIKE '%${searchTerm}%' OR material_category.material_category_name ILIKE '%${searchTerm}%')`);
+      res.status(200).json(rows);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  }
+}
 module.exports = {
   viewAllOrders,
   updateShipping,
@@ -241,6 +278,7 @@ module.exports = {
   adminAddNewProduct,
   getAdminOneProduct,
   updateOneProduct,
+  getSearchedProduct,
 };
 
 // Functions

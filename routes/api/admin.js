@@ -9,5 +9,6 @@ router.put("/updateShipping", adminCtrl.updateShipping);
 router.post("/addNewProduct", adminCtrl.adminAddNewProduct);
 router.get("/one/:productId", adminCtrl.getAdminOneProduct);
 router.post("/update/:productId", adminCtrl.updateOneProduct);
+router.get("/search/:searchTerm", adminCtrl.getSearchedProduct);
 
 module.exports = router;
