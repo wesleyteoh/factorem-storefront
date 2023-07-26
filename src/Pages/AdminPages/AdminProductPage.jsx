@@ -77,17 +77,34 @@ export default function AdminProductPage() {
     console.log("imageLink", imageLink);
     console.log("productId", products[0].product_id);
     console.log("active?", isActive);
+    console.log("userId", user.user_id);
+    console.log("useremail", user.user_email);
     console.log(typeof isActive);
-    // try {
-    //   await sendRequest(`/api/cart/${user.user_id}/add`, "POST", {
-    //     product_id: parseInt(productId),
-    //     product_price: products[0].alt_price,
-    //   });
-    //   setOpenSuccess(true);
-    // } catch (err) {
-    //   console.log(err);
-    //   setOpenFailed(true);
-    // }
+    try {
+      await sendRequest(
+        `/api/adminSide/update/${products[0].product_id}`,
+        "POST",
+        {
+          userId: user.user_id,
+          email: user.user_email,
+          productName: productName,
+          description: description,
+          leadtime: leadtime,
+          productDimenX: productDimenX,
+          productDimenY: productDimenY,
+          productDimenZ: productDimenZ,
+          price: price,
+          altPrice: altPrice,
+          dataSheet: dataSheet,
+          imageLink: imageLink,
+          isActive: isActive,
+        }
+      );
+      setOpenSuccess(true);
+    } catch (err) {
+      console.log(err);
+      setOpenFailed(true);
+    }
   };
 
   // MUI status messages
@@ -135,7 +152,7 @@ export default function AdminProductPage() {
   const handleActiveChange = (event) => {
     setIsActive(JSON.parse(event.target.value));
   };
-  const disabled = user === null;
+  const disabled = user === null || allowEdits;
   const productsIsSet = products && products[0];
   if (status === "loading") {
     return <Loading />;
@@ -150,10 +167,45 @@ export default function AdminProductPage() {
         <div>{JSON.stringify(user)}</div> */}
         {/* Products: {JSON.stringify(products)} */}
         <img width={"30%"} src={products[0].image_link} alt="product_image" />
+
+        <div>Product: {products[0].product_name}</div>
+        <div>Product Id: {products[0].product_id}</div>
+        <div>Description: {products[0].description}</div>
+        <div>Material: {products[0].material_category_name}</div>
+        <div>Category: {products[0].main_category_name}</div>
+        <div>Lead time: {products[0].leadtime} days</div>
+        <div>
+          Dimensions: {products[0].product_dimen_x}cm x{" "}
+          {products[0].product_dimen_y}cm x {products[0].product_dimen_z}cm
+        </div>
+        <div>Price: ${products[0].price}</div>
+        {products[0].price === products[0].alt_price ? (
+          <></>
+        ) : (
+          `Discounted price: $${products[0].alt_price}`
+        )}
+        {isValidWebsite ? (
+          <div>
+            Datasheet:{" "}
+            <Link
+              to={products[0].datasheet}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Datasheet
+            </Link>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        {products[0].product_active ? <></> : <div>Product Discontinued</div>}
+
+        {/* admin make change */}
         <button onClick={() => setAllowEdits((prev) => !prev)}>
           Make edits
         </button>
-        {JSON.stringify(allowEdits)}
+        {/* {JSON.stringify(allowEdits)} */}
         <form onSubmit={handleSubmitChange}>
           <label>
             Product name:
@@ -269,39 +321,6 @@ export default function AdminProductPage() {
             <option value="false">No</option>
           </select>
         </form>
-
-        <div>Product: {products[0].product_name}</div>
-        <div>Product Id: {products[0].product_id}</div>
-        <div>Description: {products[0].description}</div>
-        <div>Material: {products[0].material_category_name}</div>
-        <div>Category: {products[0].main_category_name}</div>
-        <div>Lead time: {products[0].leadtime} days</div>
-        <div>
-          Dimensions: {products[0].product_dimen_x}cm x{" "}
-          {products[0].product_dimen_y}cm x {products[0].product_dimen_z}cm
-        </div>
-        <div>Price: ${products[0].price}</div>
-        {products[0].price === products[0].alt_price ? (
-          <></>
-        ) : (
-          `Discounted price: $${products[0].alt_price}`
-        )}
-        {isValidWebsite ? (
-          <div>
-            Datasheet:{" "}
-            <Link
-              to={products[0].datasheet}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Datasheet
-            </Link>
-          </div>
-        ) : (
-          <></>
-        )}
-
-        {products[0].product_active ? <></> : <div>Product Discontinued</div>}
         <div>
           <button disabled={disabled} onClick={handleSubmitChange}>
             Submit change
