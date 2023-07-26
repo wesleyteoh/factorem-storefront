@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function MainProducts({
+export default function AdminMainProducts({
   name,
   price,
   description,
@@ -22,7 +22,7 @@ export default function MainProducts({
           alt="imagename"
         />
         <div className="flex flex-wrap mt-3">
-          <Link to={`/products/${id}`} className="product-name">
+          <Link to={`/admin/products/${id}`} className="product-name">
             {name}
           </Link>
           <div className="product-price"> Price ${price}</div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Loading from "../../Components/Loading";
 import sendRequest from "../../utilities/send-request";
-import MainProducts from "../../Components/MainProducts/MainProducts";
+import AdminMainProducts from "../../Components/MainProducts/AdminMainProducts";
 
 export default function AdminSearchPage() {
   const { searchTerm } = useParams();
@@ -92,7 +92,7 @@ export default function AdminSearchPage() {
           : searchedProducts?.map((product) => (
               <div key={product.product_id} className="productGrid">
                 {/* <div>{JSON.stringify(product)}</div> */}
-                <MainProducts
+                <AdminMainProducts
                   name={product.product_name}
                   price={product.price}
                   altprice={product.alt_price}
