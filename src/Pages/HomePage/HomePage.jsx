@@ -66,8 +66,11 @@ export default function HomePage({ user }) {
           columns={{ xs: 1, sm: 2, md: 20 }}
         >
           {products?.map((product) => (
-            <Grid xs={3} sm={4} md={4} spacing={{ p: 12 }}>
-              <Paper sx={{ width: 300, height: 200, boxShadow: 3 }}>
+            <Grid item xs={3} sm={4} md={4} key={product.product_id}>
+              <Paper
+                sx={{ width: 300, height: 200, boxShadow: 3 }}
+                key={product.product_id}
+              >
                 <div key={product.product_id}>
                   <MainProducts
                     name={product.product_name}
