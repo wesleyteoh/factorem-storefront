@@ -36,10 +36,9 @@ export default function HistoryPage() {
     <>
       <AccountNavBar />
       History Page
-      {/* {JSON.stringify([pastPurchases])} */}
       {pastPurchases
         ? pastPurchases?.map((purchases) => (
-            <div key={purchases.order_id}>
+            <div className="orderDetails" key={purchases.order_id}>
               <fieldset>
                 <div>Order ID: {purchases.order_id}</div>
                 <div>

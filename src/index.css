@@ -198,3 +198,17 @@ header a:hover {
 .productContainer {
   padding: 10px;
 }
+.orderDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+  padding: 20px;
+}
+
+.mainDetails {
+  display: flex;
+  /* flex-wrap: wrap; */
+  /* grid-template-columns: 200px 400px; */
+  justify-content: start;
+}
