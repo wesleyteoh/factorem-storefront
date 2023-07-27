@@ -16,7 +16,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 10. Admin can add new products
 11. Search function. 
 
-##Live Page
+## Live Page
 [Factorem Storefront](https://factoremstore.onrender.com/)
 
 ## Technologies used
