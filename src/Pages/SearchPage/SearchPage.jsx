@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router";
 import Loading from "../../Components/Loading";
 import sendRequest from "../../utilities/send-request";
 import MainProducts from "../../Components/MainProducts/MainProducts";
+import Grid from "@mui/material/Grid";
+import { Paper } from "@mui/material";
 
 export default function SearchPage() {
   const { searchTerm } = useParams();
@@ -83,28 +85,46 @@ export default function SearchPage() {
               required
             />
             <button>Search</button>
-            <small>Hint: You may use search by id using id:</small>
+            <small>Hint: You may use search by item id using id:</small>
           </label>
         </form>
         {/* <div>{JSON.stringify(searchedProducts?.length)}</div> */}
-        {searchedProducts?.length === 0
-          ? "No items found"
-          : searchedProducts?.map((product) => (
-              <div key={product.product_id} className="productGrid">
-                {/* <div>{JSON.stringify(product)}</div> */}
-                <MainProducts
-                  name={product.product_name}
-                  price={product.price}
-                  altprice={product.alt_price}
-                  description={product.description}
-                  imageUrl={product.image_link}
-                  stock={product.stock_avail}
-                  material_category={product.main_category_name}
-                  material={product.material_category_name}
-                  id={product.product_id}
-                />
-              </div>
-            ))}
+        {searchedProducts?.length === 0 ? (
+          <div>No item found</div>
+        ) : (
+          <>
+            <Grid
+              container
+              spacing={{ xs: 2, md: 2 }}
+              columns={{ xs: 1, sm: 2, md: 20 }}
+            >
+              {searchedProducts?.map((product) => (
+                <Grid item xs={3} sm={4} md={4} key={product.product_id}>
+                  <Paper
+                    sx={{ width: 300, height: 200, boxShadow: 3 }}
+                    key={product.product_id}
+                  >
+                    <div key={product.product_id} className="productGrid">
+                      {/* <div>{JSON.stringify(product)}</div> */}
+                      <MainProducts
+                        name={product.product_name}
+                        price={product.price}
+                        altprice={product.alt_price}
+                        description={product.description}
+                        imageUrl={product.image_link}
+                        stock={product.stock_avail}
+                        material_category={product.main_category_name}
+                        material={product.material_category_name}
+                        id={product.product_id}
+                      />
+                    </div>
+                  </Paper>
+                  <br />
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        )}
       </>
     );
 }
