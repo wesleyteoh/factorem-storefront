@@ -95,7 +95,8 @@ export default function AdminAllOrdersPage() {
 function convertDate(date) {
   const dateObject = new Date(date);
   // Get the time in Singapore time zone (UTC+8)
-  const singaporeTime = new Date(dateObject.getTime() + 8 * 60 * 60 * 1000);
+  // const singaporeTime = new Date(dateObject.getTime() + 8 * 60 * 60 * 1000);
+  const singaporeTime = new Date(dateObject.getTime());
   const formattedDate = singaporeTime.toLocaleString("en-SG", {
     year: "numeric",
     month: "2-digit",
