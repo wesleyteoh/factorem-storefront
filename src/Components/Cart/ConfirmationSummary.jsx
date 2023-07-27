@@ -25,7 +25,7 @@ export default function ConfirmationSummary({
   };
   return (
     <>
-      <div>
+      <div className="confirmationSummary">
         Please confirm the following Address
         <div>Address 1: {profileUserAddressLine1}</div>
         <div>Address 2: {profileUserAddressLine2}</div>
@@ -33,8 +33,10 @@ export default function ConfirmationSummary({
         <div>Contact: {profileContact}</div>
         <div>City: {profileUserCity}</div>
         <div>Country: {profileUserCountry}</div>
+        <button className="changeAddress" onClick={handleToAddress}>
+          Change Address
+        </button>
       </div>
-      <button onClick={handleToAddress}>Change Address</button>
       {/* {JSON.stringify(cartContent)} */}
       <div>Items: {itemCount}</div>
       <div>Total amount: ${totalPrice}</div>

@@ -212,3 +212,17 @@ header a:hover {
   /* grid-template-columns: 200px 400px; */
   justify-content: start;
 }
+.confirmationSummary {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+  padding: 20px;
+  margin-left: 40%;
+}
+
+.changeAddress {
+  width: 50%;
+  padding-left: 0%;
+  margin-left: 0;
+}

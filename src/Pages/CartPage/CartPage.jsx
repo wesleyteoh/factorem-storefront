@@ -132,7 +132,7 @@ export default function CartPage() {
         </div>
       ))}
       <fieldset>
-        <form onSubmit={handleCheckout}>
+        <form style={{ color: "white" }} onSubmit={handleCheckout}>
           <div>Order Summary</div>
           <CartSummary
             cartContent={cartContent}

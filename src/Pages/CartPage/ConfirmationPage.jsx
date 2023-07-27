@@ -141,7 +141,7 @@ export default function ConfirmationPage() {
         </div>
       ))}
       <fieldset>
-        <form onSubmit={handleCheckout}>
+        <form style={{ color: "white" }} onSubmit={handleCheckout}>
           <div>Order Summary</div>
           <ConfirmationSummary
             cartContent={cartContent}
