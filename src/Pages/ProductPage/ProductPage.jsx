@@ -21,15 +21,21 @@ export default function ProductPage() {
 
   useEffect(() => {
     setStatus("loading");
+
     async function getProducts() {
-      const products = await sendRequest(
-        `/api/products/one/${productId}`,
-        "GET"
-      );
-      setProducts(products);
-      // console.log(products[0].image_link);
-      setIsValidWebsite(websiteRegex.test(products[0].datasheet));
-      setStatus("success");
+      try {
+        const products = await sendRequest(
+          `/api/products/one/${productId}`,
+          "GET"
+        );
+
+        setProducts(products);
+        // console.log(products[0].image_link);
+        setIsValidWebsite(websiteRegex.test(products[0].datasheet));
+        setStatus("success");
+      } catch {
+        console.log("fetch failed");
+      }
     }
     getProducts();
 
