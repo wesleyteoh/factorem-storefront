@@ -206,7 +206,7 @@ export default function AdminNewProductPage() {
       <div>New Product Page</div>
       {/* <div>{JSON.stringify(user)}</div> */}
       <fieldset className="profile-container">
-        <form onSubmit={handleSubmit}>
+        <form style={{ color: "white" }} onSubmit={handleSubmit}>
           <label>
             Product Name:
             <input

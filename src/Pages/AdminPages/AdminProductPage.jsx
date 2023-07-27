@@ -167,23 +167,24 @@ export default function AdminProductPage() {
         <div>{JSON.stringify(user)}</div> */}
         {/* Products: {JSON.stringify(products)} */}
         <img width={"30%"} src={products[0].image_link} alt="product_image" />
-
-        <div>Product: {products[0].product_name}</div>
-        <div>Product Id: {products[0].product_id}</div>
-        <div>Description: {products[0].description}</div>
-        <div>Material: {products[0].material_category_name}</div>
-        <div>Category: {products[0].main_category_name}</div>
-        <div>Lead time: {products[0].leadtime} days</div>
-        <div>
-          Dimensions: {products[0].product_dimen_x}cm x{" "}
-          {products[0].product_dimen_y}cm x {products[0].product_dimen_z}cm
+        <div className="productDetailsAdmin">
+          <div>Product: {products[0].product_name}</div>
+          <div>Product Id: {products[0].product_id}</div>
+          <div>Description: {products[0].description}</div>
+          <div>Material: {products[0].material_category_name}</div>
+          <div>Category: {products[0].main_category_name}</div>
+          <div>Lead time: {products[0].leadtime} days</div>
+          <div>
+            Dimensions: {products[0].product_dimen_x}cm x{" "}
+            {products[0].product_dimen_y}cm x {products[0].product_dimen_z}cm
+          </div>
+          <div>Price: ${products[0].price}</div>
+          {products[0].price === products[0].alt_price ? (
+            <></>
+          ) : (
+            `Discounted price: $${products[0].alt_price}`
+          )}
         </div>
-        <div>Price: ${products[0].price}</div>
-        {products[0].price === products[0].alt_price ? (
-          <></>
-        ) : (
-          `Discounted price: $${products[0].alt_price}`
-        )}
         {isValidWebsite ? (
           <div>
             Datasheet:{" "}
@@ -206,7 +207,7 @@ export default function AdminProductPage() {
           Make edits
         </button>
         {/* {JSON.stringify(allowEdits)} */}
-        <form onSubmit={handleSubmitChange}>
+        <form style={{ color: "white" }} onSubmit={handleSubmitChange}>
           <label>
             Product name:
             <input
@@ -220,7 +221,7 @@ export default function AdminProductPage() {
           <label>
             Description:
             <input
-              className="profile-box"
+              className="description-box"
               value={description}
               type="text"
               onChange={handleDescriptionChange}
@@ -304,7 +305,7 @@ export default function AdminProductPage() {
           <label>
             Image Link:
             <input
-              className="profile-box"
+              className="imagelink-box"
               value={imageLink}
               type="text"
               onChange={handleImageLinkChange}

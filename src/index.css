@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 /* CSS Custom Properties */
 :root {
   --white: #ffffff;
@@ -22,9 +23,10 @@
 body {
   margin: 0;
   color: white;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; */
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(18, 114, 228);
@@ -196,7 +198,9 @@ header a:hover {
 } */
 
 .productContainer {
-  padding: 10px;
+  padding: 5px;
+  text-align: start;
+  /* align-items: center; */
 }
 .orderDetails {
   display: flex;
@@ -239,4 +243,21 @@ header a:hover {
   justify-content: start;
   text-align: start;
   padding-left: 250px;
+}
+.productDetailsAdmin {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+  padding-left: 250px;
+  font-size: 20px;
+  padding-top: 10px;
+}
+
+.imagelink-box {
+  width: 100%;
+}
+
+.description-box {
+  width: 100%;
 }

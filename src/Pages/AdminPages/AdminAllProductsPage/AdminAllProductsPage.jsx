@@ -68,7 +68,7 @@ export default function AdminAllProductsPage({ user }) {
           {products?.map((product) => (
             <Grid item xs={3} sm={4} md={4} key={product.product_id}>
               <Paper
-                sx={{ width: 300, height: 200, boxShadow: 3 }}
+                sx={{ width: 300, height: 210, boxShadow: 3 }}
                 key={product.product_id}
               >
                 <div key={product.product_id} className="productGrid">
