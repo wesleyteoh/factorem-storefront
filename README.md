@@ -16,9 +16,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 10. Admin can add new products
 11. Search function. 
 
+##Live Page
+[Factorem Storefront](https://factoremstore.onrender.com/)
+
 ## Technologies used
 - HTML, CSS, JavaScript
 - PERN (PostgreSQL, Express,js, React.js, Node,js)
+- MUI
 
 ## Task management and tracking
 [Trello](https://trello.com/b/GqhQpcf6/factorem-storefront)
+
+
