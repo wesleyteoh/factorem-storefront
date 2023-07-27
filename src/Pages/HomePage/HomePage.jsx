@@ -3,6 +3,8 @@ import sendRequest from "../../utilities/send-request";
 import Loading from "../../Components/Loading";
 import MainProducts from "../../Components/MainProducts/MainProducts";
 import { useNavigate } from "react-router";
+import Grid from "@mui/material/Grid";
+import { Paper } from "@mui/material";
 
 export default function HomePage({ user }) {
   const [products, setProducts] = useState(null);
@@ -57,21 +59,33 @@ export default function HomePage({ user }) {
             <button>Search</button>
           </label>
         </form>
-        {products?.map((product) => (
-          <div key={product.product_id} className="productGrid">
-            <MainProducts
-              name={product.product_name}
-              price={product.price}
-              altprice={product.alt_price}
-              description={product.description}
-              imageUrl={product.image_link}
-              stock={product.stock_avail}
-              material={product.material_category_name}
-              id={product.product_id}
-              material_category={product.main_category_name}
-            />
-          </div>
-        ))}
+        <br />
+        <Grid
+          container
+          spacing={{ xs: 2, md: 2 }}
+          columns={{ xs: 1, sm: 2, md: 20 }}
+        >
+          {products?.map((product) => (
+            <Grid xs={3} sm={4} md={4} spacing={{ p: 12 }}>
+              <Paper sx={{ width: 300, height: 200, boxShadow: 3 }}>
+                <div key={product.product_id}>
+                  <MainProducts
+                    name={product.product_name}
+                    price={product.price}
+                    altprice={product.alt_price}
+                    description={product.description}
+                    imageUrl={product.image_link}
+                    stock={product.stock_avail}
+                    material={product.material_category_name}
+                    id={product.product_id}
+                    material_category={product.main_category_name}
+                  />
+                </div>
+              </Paper>
+              <br />
+            </Grid>
+          ))}
+        </Grid>
       </>
     );
 }

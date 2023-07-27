@@ -63,6 +63,11 @@ export default function App() {
               path="/users/setting"
               element={<SettingsPage user={user} />}
             />
+            <Route
+              path="/users/setting"
+              element={<SettingsPage user={user} />}
+            />
+
             <Route path="/*" element={<Error404Page />} />
           </Routes>
         </>

@@ -189,8 +189,12 @@ header a:hover {
   border-bottom-style: solid;
 }
 
-.productGrid {
+/* .productGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+} */
+
+.productContainer {
+  padding: 10px;
 }

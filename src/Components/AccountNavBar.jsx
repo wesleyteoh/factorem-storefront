@@ -12,9 +12,9 @@ export default function AccountNavBar() {
             <li>
               <Link to="/users/setting">Settings</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/users/history">Past Orders</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </header>

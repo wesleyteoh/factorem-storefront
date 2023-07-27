@@ -16,7 +16,7 @@ export default function MainProducts({
       {/* <div className="flex"> */}
       <div className="productContainer">
         <img
-          width={"20%"}
+          width={"30%"}
           className="productImage"
           src={`${imageUrl}`}
           alt="imagename"
