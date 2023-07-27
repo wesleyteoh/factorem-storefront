@@ -8,6 +8,7 @@ import Error404Page from "../Error404Page/Error404Page";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { Paper } from "@mui/material";
+import Container from "@mui/material/Container";
 
 export default function ProductPage() {
   const [user, setUser] = useState(getUser());
@@ -90,79 +91,92 @@ export default function ProductPage() {
     return <Error404Page />;
   } else if (productsIsSet) {
     return (
-      <div style={styles.paperContainer}>
-        <Paper sx={{ width: "90%", padding: "120px" }}>
-          {/* product page {productId}
-        user:{JSON.stringify(user.user_id)}
-        <div>{JSON.stringify(user)}</div> */}
-          {/* Products: {JSON.stringify(products)} */}
-          <img width={"30%"} src={products[0].image_link} alt="product_image" />
-          <div>Product: {products[0].product_name}</div>
-          <div>Product Id: {products[0].product_id}</div>
-          <div>Description: {products[0].description}</div>
-          <div>Material: {products[0].material_category_name}</div>
-          <div>Category: {products[0].main_category_name}</div>
-          <div>Lead time: {products[0].leadtime} days</div>
-          <div>
-            Dimensions: {products[0].product_dimen_x}cm x{" "}
-            {products[0].product_dimen_y}cm x {products[0].product_dimen_z}cm
-          </div>
-          <div>Price: ${products[0].price}</div>
-          {products[0].price === products[0].alt_price ? (
-            <></>
-          ) : (
-            `Discounted price: $${products[0].alt_price}`
-          )}
-          {isValidWebsite ? (
-            <div>
-              Datasheet:{" "}
-              <Link
-                to={products[0].datasheet}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Datasheet
-              </Link>
-            </div>
-          ) : (
-            <></>
-          )}
+      <Container maxWidth="lg">
+        <div style={styles.paperContainer}>
+          <Paper sx={{ width: "90%", padding: "120px" }}>
+            <img
+              width={"40%"}
+              src={products[0].image_link}
+              alt="product_image"
+            />
+            <div className="productDetails">
+              <div>Product: {products[0].product_name}</div>
+              <div>Product Id: {products[0].product_id}</div>
+              <div>Description: {products[0].description}</div>
+              <div>Material: {products[0].material_category_name}</div>
+              <div>Category: {products[0].main_category_name}</div>
+              <div>Lead time: {products[0].leadtime} days</div>
+              <div>
+                Dimensions: {products[0].product_dimen_x}cm x{" "}
+                {products[0].product_dimen_y}cm x {products[0].product_dimen_z}
+                cm
+              </div>
+              <div>Price: ${products[0].price}</div>
+              {products[0].price === products[0].alt_price ? (
+                <></>
+              ) : (
+                `Discounted price: $${products[0].alt_price}`
+              )}
+              {isValidWebsite ? (
+                <div>
+                  Datasheet:{" "}
+                  <Link
+                    to={products[0].datasheet}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Datasheet
+                  </Link>
+                </div>
+              ) : (
+                <></>
+              )}
 
-          {products[0].product_active ? <></> : <div>Product Discontinued</div>}
-          <div>
-            <button disabled={disabled} onClick={handleAddToCart}>
-              Add To Cart
-            </button>
-            <span>{error}</span>
-          </div>
-          <Snackbar
-            open={openSuccess}
-            autoHideDuration={3000}
-            onClose={handleClose}
-          >
-            <Alert
+              {products[0].product_active ? (
+                <></>
+              ) : (
+                <div>Product Discontinued</div>
+              )}
+            </div>
+            <div>
+              <button
+                className="addToCartBtn"
+                disabled={disabled}
+                onClick={handleAddToCart}
+              >
+                <div>Add To Cart</div>
+              </button>
+              <span>{error}</span>
+            </div>
+            <Snackbar
+              open={openSuccess}
+              autoHideDuration={3000}
               onClose={handleClose}
-              severity="success"
-              sx={{ width: "100%" }}
             >
-              Added to cart
-            </Alert>
-          </Snackbar>
-          <Snackbar
-            open={openFailed}
-            autoHideDuration={3000}
-            onClose={handleClose}
-          >
-            <Alert
+              <Alert
+                onClose={handleClose}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Added to cart
+              </Alert>
+            </Snackbar>
+            <Snackbar
+              open={openFailed}
+              autoHideDuration={3000}
               onClose={handleClose}
-              severity="error"
-              sx={{ width: "100%" }}
             >
-              Something went wrong. Try refreshing the page.
-            </Alert>
-          </Snackbar>
-        </Paper>
-      </div>
+              <Alert
+                onClose={handleClose}
+                severity="error"
+                sx={{ width: "100%" }}
+              >
+                Something went wrong. Try refreshing the page.
+              </Alert>
+            </Snackbar>
+          </Paper>
+        </div>
+      </Container>
     );
   }
 }

@@ -226,3 +226,17 @@ header a:hover {
   padding-left: 0%;
   margin-left: 0;
 }
+
+.addToCartBtn {
+  /* display: block; */
+  width: 50%;
+  height: 70px;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+  padding-left: 250px;
+}
