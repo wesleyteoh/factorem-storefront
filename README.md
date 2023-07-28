@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Introduction
+
+This storefront was build by request of Factorem.co, a company that matches clients to manufacturers. This will serve as a storefront for their more commonly manufactured products.
+
 ## Capabilities
 
 1. Public to view all possible parts without logging in but cannot checkout
