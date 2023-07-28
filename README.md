@@ -31,4 +31,22 @@ This storefront was build by request of Factorem.co, a company that matches clie
 ## Task management and tracking
 [Trello](https://trello.com/b/GqhQpcf6/factorem-storefront)
 
+## Screenshots
+Main Page
 
+![](https://i.imgur.com/8UL9BTE.jpg)
+
+
+Public can view products but must log in if they want to add to cart
+![](https://i.imgur.com/XhcOTwp.jpg)
+
+Cart page which saves the cart so it can be used on any browser
+![](https://i.imgur.com/AeXjqp7.jpg)
+
+Admin can make changes to products
+![](https://i.imgur.com/4vBQvva.jpg)
+
+
+And update order statuses
+
+![](https://i.imgur.com/6cbl5FW.jpg)
