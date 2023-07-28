@@ -31,6 +31,12 @@ This storefront was build by request of Factorem.co, a company that matches clie
 ## Task management and tracking
 [Trello](https://trello.com/b/GqhQpcf6/factorem-storefront)
 
+## Future enhancements
+1. Add enhanced checks in the background for products
+2. Prevent checkout if address details are not present
+3. Improved styling and a flow chart for shipping status
+4. Search by categories
+
 ## Screenshots
 Main Page
 
